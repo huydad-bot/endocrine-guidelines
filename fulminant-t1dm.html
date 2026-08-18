@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전격성(전격형) 제1형 당뇨병(Fulminant T1D) — 진단기준 &amp; 20년 발견사</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --surface: #ffffff;
+    --surface2: #f0f2f5;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text2: #57606a;
+    /* 영역별 색 */
+    --diag:   #0f6e5c;  /* 개요 — 청록 */
+    --gene:   #0550ae;  /* 진단기준 — 청 */
+    --evid:   #9b1c2e;  /* 발견의 역사 — 진홍 */
+    --preg:   #7c3aed;  /* 특징·병태생리 — 보라 */
+    --future: #b45309;  /* 최신동향 — 호박색 */
+    --accent: #7c3aed;
+    --green: #1a7f37;
+    --red: #cf222e;
+    --yellow: #9a6700;
+    --fscale: 1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: calc(13px * var(--fscale, 1));
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 8px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px; position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner { width: 100%; max-width: 1020px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .logo-row { display: flex; align-items: center; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .logo-dr {
+    display: flex; align-items: center; gap: 0;
+    font-size: calc(11px * var(--fscale, 1)); font-weight: 800; letter-spacing: 1px;
+  }
+  .logo-dr span:nth-child(1) { background: var(--diag); color:#fff; padding:3px 6px; border-radius:4px 0 0 4px; }
+  .logo-dr span:nth-child(2) { background: var(--evid); color:#fff; padding:3px 6px; border-radius:0 4px 4px 0; }
+  header h1 { font-size: 16px; font-weight: 700; color: var(--text); text-align:center; }
+  .meta-line { color: var(--text2); font-size: calc(11px * var(--fscale, 1)); text-align: center; line-height: 1.6; }
+  .source-link { color: var(--accent); font-size: calc(11px * var(--fscale, 1)); text-decoration: none; }
+  .source-link:hover { text-decoration: underline; }
+
+  .tab-bar {
+    display: flex; justify-content: center;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .font-zoom-btn {
+    display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+    margin: 4px 4px 4px 6px; padding: 5px 10px;
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text2); font-size: calc(11px * var(--fscale, 1)); font-weight: 700;
+    cursor: pointer; user-select: none; white-space: nowrap; transition: background .15s;
+  }
+  .font-zoom-btn:hover { background: var(--border); }
+  .tab-bar-inner { width: 100%; max-width: 1020px; display: flex; align-items: center; justify-content: center; gap: 2px; }
+  .tab {
+    padding: 8px 10px; font-size: calc(12px * var(--fscale, 1)); color: var(--text2);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: color .15s, border-color .15s; user-select: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--diag); border-bottom-color: var(--diag); font-weight: 600; }
+  .tab-abbr-wrap { display: flex; align-items: center; padding: 4px 6px; margin-left: 4px; flex-shrink: 0; position: relative; }
+
+  .main { padding: 12px 16px; max-width: 1020px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 680px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .card-header {
+    background: var(--surface2); padding: 8px 12px;
+    font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text2);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; user-select: none;
+  }
+  .card-header .ch-title { display: flex; align-items: center; gap: 8px; text-transform:none; }
+  .card-header .toggle { font-size: calc(14px * var(--fscale, 1)); transition: transform .2s; }
+  .card-header.open .toggle { transform: rotate(180deg); }
+  .card-body { padding: 10px 12px; }
+  .card-body.collapsed { display: none; }
+
+  .stat-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px 26px; flex: 1; text-align: center; min-width: 130px; cursor: pointer; transition: box-shadow .15s, transform .1s, border-color .15s; position: relative; }
+  .stat-box:hover { box-shadow: 0 2px 10px rgba(0,0,0,.08); transform: translateY(-1px); border-color: var(--accent); }
+  .stat-box::after { content: '자세히 ▸'; position: absolute; right: 8px; bottom: 6px; font-size: calc(9px * var(--fscale, 1)); color: var(--text2); opacity: .6; }
+  .stat-val-sm { font-size: calc(13px * var(--fscale, 1)) !important; line-height: 1.3; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,18,22,.55); z-index: 500; align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--surface); border-radius: 10px; max-width: 620px; width: 100%; max-height: 82vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+  .modal-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: 0; background: var(--surface); }
+  .modal-head-title { font-size: calc(15px * var(--fscale, 1)); font-weight: 700; }
+  .modal-head-val { font-size: calc(12px * var(--fscale, 1)); color: var(--text2); margin-top: 2px; }
+  .modal-close { cursor: pointer; font-size: calc(18px * var(--fscale, 1)); color: var(--text2); line-height: 1; padding: 4px 6px; border-radius: 5px; user-select: none; }
+  .modal-close:hover { background: var(--surface2); color: var(--text); }
+  .modal-body { padding: 14px 16px; font-size: calc(12px * var(--fscale, 1)); line-height: 1.75; }
+  .modal-body ul { padding-left: 18px; margin: 4px 0; }
+  .modal-body li { margin-bottom: 6px; }
+  .modal-body .alert { margin: 8px 0; }
+  .stat-val { font-size: calc(15px * var(--fscale, 1)); font-weight: 700; }
+  .stat-lbl { font-size: calc(10px * var(--fscale, 1)); color: var(--text2); margin-top: 2px; line-height: 1.35; }
+
+  .alert { padding: 8px 12px; border-radius: 6px; font-size: calc(12px * var(--fscale, 1)); margin: 8px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.55; }
+  .alert-danger  { background: #ffebe9; border-left: 3px solid var(--red);    color: #82071e; }
+  .alert-info    { background: #ede9fe; border-left: 3px solid var(--accent); color: #5b21b6; }
+  .alert-warn    { background: #fff8c5; border-left: 3px solid var(--yellow); color: #7d4e00; }
+  .alert-success { background: #dafbe1; border-left: 3px solid var(--green);  color: #116329; }
+  .alert-diag    { background: #e0f4f1; border-left: 3px solid var(--diag);  color: #0f5549; }
+  .alert-gene    { background: #ddf4ff; border-left: 3px solid var(--gene); color: #0550ae; }
+  .alert-evid    { background: #fce8eb; border-left: 3px solid var(--evid); color: var(--evid); }
+  .alert-preg    { background: #ede9fe; border-left: 3px solid var(--preg);  color: #5b21b6; }
+  .alert-future  { background: #fff1e0; border-left: 3px solid var(--future);  color: #7d4400; }
+
+  .tbl { width: 100%; border-collapse: collapse; font-size: calc(11px * var(--fscale, 1)); }
+  .tbl th { background: var(--surface2); color: var(--text2); padding: 6px 8px; font-size: calc(10px * var(--fscale, 1)); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; text-align: left; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.45; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: rgba(0,0,0,.02); }
+  .tbl-wrap { overflow-x: auto; }
+
+  .acc { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; overflow: hidden; }
+  .acc-hdr { background: var(--surface2); padding: 7px 12px; font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .acc-hdr:hover { background: #e5e9ef; }
+  .acc-toggle { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); transition: transform .2s; }
+  .acc-hdr.open .acc-toggle { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 10px 12px; font-size: calc(12px * var(--fscale, 1)); line-height: 1.65; }
+  .acc-body ul { padding-left: 16px; margin: 4px 0; }
+  .acc-body li { margin-bottom: 4px; }
+
+  .stage { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: calc(10px * var(--fscale, 1)); font-weight: 700; white-space: nowrap; }
+  .t-diag    { background: #e0f4f1; color: var(--diag); border: 1px solid var(--diag); }
+  .t-gene    { background: #ddf4ff; color: var(--gene); border: 1px solid var(--gene); }
+  .t-evid    { background: #fce8eb; color: var(--evid); border: 1px solid var(--evid); }
+  .t-preg    { background: #ede9fe; color: var(--preg); border: 1px solid var(--preg); }
+  .t-future  { background: #fff1e0; color: var(--future); border: 1px solid var(--future); }
+
+  .abbr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+  .abbr-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; }
+  .abbr-term { font-weight: 700; color: var(--accent); font-size: calc(12px * var(--fscale, 1)); font-family: 'Courier New', monospace; }
+  .abbr-def  { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); line-height: 1.45; }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #c8d0d9; border-radius: 3px; }
+
+  .sec-sep { height: 1px; background: var(--border); margin: 10px 0; }
+  small { color: var(--text2); font-size: calc(10px * var(--fscale, 1)); }
+
+  .gene-acc-hdr { display:flex; align-items:center; gap:8px; }
+  .flow { display:flex; align-items:center; flex-wrap:wrap; gap:6px; font-size: calc(11.5px * var(--fscale,1)); margin:8px 0; }
+  .flow-box { background: var(--surface2); border:1px solid var(--border); border-radius:6px; padding:6px 10px; font-weight:600; }
+  .flow-arrow { color: var(--text2); font-weight:700; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-row">
+      <div class="logo-dr"><span>F</span><span>T1D</span></div>
+      <h1>전격성(전격형) 제1형 당뇨병 — 진단기준(2012) &amp; 20년 발견사(2020)</h1>
+    </div>
+    <div class="meta-line">
+      <span class="source-link">① Imagawa A, Hanafusa T, et al. Report of the Committee of the JDS on the Research of Fulminant and Acute-onset T1DM: New diagnostic criteria of fulminant T1DM (2012). J Diabetes Investig 2012;3:536–539.</span><br>
+      <span class="source-link">② Hanafusa T. Fulminant type 1 diabetes: 20 years of discovery and development. Diabetol Int 2020;11:310–314.</span><br>
+      <span style="font-size: calc(10px * var(--fscale, 1));color:var(--text2);font-style:italic">본 도구는 승인을 받지 않은 개인 참고자료이며, 실제 진료는 원문 및 최신 근거를 함께 확인할 것</span>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <div id="font-zoom-btn" class="font-zoom-btn" onclick="cycleFontZoom()"><span class="fz-icon">🔠</span><span id="font-zoom-label">100%</span></div>
+    <div class="tab active" onclick="showTab('overview')">🏠 개요</div>
+    <div class="tab" onclick="showTab('criteria')">📜 진단기준(2012)</div>
+    <div class="tab" onclick="showTab('history')">🔬 발견의 역사</div>
+    <div class="tab" onclick="showTab('feature')">🧬 특징·병태생리</div>
+    <div class="tab" onclick="showTab('now')">🌍 최신 동향</div>
+    <div class="tab-abbr-wrap">
+      <div style="position:relative;display:flex;align-items:center;flex-shrink:0">
+        <span style="position:absolute;left:8px;color:var(--text2);font-size: calc(12px * var(--fscale, 1));pointer-events:none">🔍</span>
+        <input id="abbr-input" type="text" placeholder="약어 검색" oninput="filterAbbr(this.value)"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px 4px 26px;color:var(--text);font-size: calc(12px * var(--fscale, 1));width:130px;outline:none;"
+          onfocus="this.style.borderColor='var(--diag)'" onblur="this.style.borderColor='var(--border)'">
+        <span id="abbr-count" style="position:absolute;right:7px;font-size: calc(10px * var(--fscale, 1));color:var(--text2);pointer-events:none"></span>
+      </div>
+      <div id="abbr-dropdown" style="display:none;position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px;width:460px;max-height:360px;overflow-y:auto;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.12)">
+        <div id="abbr-grid-drop" style="display:grid;grid-template-columns:1fr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="stat-modal-overlay" class="modal-overlay" onclick="if(event.target===this) closeStatModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div id="stat-modal-title" class="modal-head-title">제목</div>
+        <div id="stat-modal-val" class="modal-head-val">수치</div>
+      </div>
+      <span class="modal-close" onclick="closeStatModal()">✕</span>
+    </div>
+    <div id="stat-modal-body" class="modal-body">내용</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════ TAB 0: 개요 ══════════════════ -->
+<div id="tab-overview" class="panel active">
+
+  <div class="stat-row">
+    <div class="stat-box" onclick="openStatModal('cutoff')"><div class="stat-val" style="color:var(--diag)">&lt;8.7%</div><div class="stat-lbl">진단기준 HbA1c(NGSP)<br>절단값(민감도 100%)</div></div>
+    <div class="stat-box" onclick="openStatModal('avg')"><div class="stat-val" style="color:var(--diag)">6.8%</div><div class="stat-lbl">FT1D 발병 시<br>평균 HbA1c(NGSP)</div></div>
+    <div class="stat-box" onclick="openStatModal('proportion')"><div class="stat-val" style="color:var(--gene)">19.6%</div><div class="stat-lbl">케톤산증 동반 신규발병<br>T1D 중 FT1D 비율(발견 당시)</div></div>
+    <div class="stat-box" onclick="openStatModal('enzyme')"><div class="stat-val" style="color:var(--evid)">98%</div><div class="stat-lbl">혈청 췌장효소<br>(아밀라제·리파제 등) 상승</div></div>
+    <div class="stat-box" onclick="openStatModal('hla')"><div class="stat-val stat-val-sm" style="color:var(--preg)">32.6% vs 14.2%</div><div class="stat-lbl">HLA DRB1*04:05-DQB1*04:01<br>(FT1D vs 대조군, OR 2.9)</div></div>
+    <div class="stat-box" onclick="openStatModal('years')"><div class="stat-val stat-val-sm" style="color:var(--future)">2000 → 2020</div><div class="stat-lbl">최초 보고(NEJM) →<br>WHO 2019 질병분류 등재</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔑</span> 핵심 요약</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>전격성(fulminant) 제1형 당뇨병(FT1D)</strong>은 일본에서 발견·규명된 T1D의 독립된 아형으로, <strong>급격한 혈당 상승</strong>이 질병 본질임을 반영하도록 진단기준이 설정되어 있다.</li>
+        <li>2012년 개정 진단기준의 핵심 변화는 HbA1c 절단값을 <strong>JDS값 &lt;8.5% → NGSP값 &lt;8.7%</strong>로 조정한 것이며(382명 분석, ROC곡선 최적값), 민감도 100%를 유지하도록 최소값으로 설정됨</li>
+        <li>임상 특징: 고혈당에도 불구한 <strong>근정상 HbA1c</strong>, 도세포 관련 자가항체 음성, 발병 시점에서도 <strong>인슐린분비능이 거의 없음</strong>, 혈청 췌장효소 상승, 감기양·소화기 전구증상, 임신 관련 발생 가능</li>
+        <li>2000년 NEJM 첫 보고 이후 일본당뇨병학회(JDS) 위원회가 조직되어 전국조사·진단기준 확립을 주도했으며, <strong>2019년 WHO 당뇨병 분류에 급성발병 T1D의 하위유형</strong>으로 공식 등재됨</li>
+        <li>최근에는 <strong>면역관문억제제(ICI) 치료의 면역관련 부작용(irAE)</strong>으로서의 FT1D가 서구에서도 보고되며 재조명되고 있음</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📄</span> 두 문헌 개요</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>문헌</th><th>성격</th><th>핵심 내용</th></tr>
+          <tr><td>Imagawa et al. 2012<br>(J Diabetes Investig)</td><td>위원회 보고서 — 진단기준 개정</td><td>382명 신규진단 FT1D 자료 분석 → HbA1c(NGSP) &lt;8.7% 절단값 채택, HLA DRB1*04:05-DQB1*04:01 연관성 추가 명시</td></tr>
+          <tr><td>Hanafusa 2020<br>(Diabetol Int)</td><td>미니리뷰 — 20년 회고</td><td>1980년대 췌장생검 연구부터 FT1D 개념 정립·전국조사·WHO 분류 등재·ICI 관련 FT1D까지의 발견·발전사</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /overview -->
+
+<!-- ══════════════════ TAB 1: 진단기준(2012) ══════════════════ -->
+<div id="tab-criteria" class="panel">
+
+  <div class="alert alert-gene"><span>📜</span><div>선별기준(2004)과 확진기준을 구분해 사용하며, 확진기준은 2012년 HbA1c 절단값이 <strong>NGSP값 기준으로 개정</strong>되었다. 선별기준·그 외 확진 항목은 여전히 신뢰할 수 있어 개정하지 않음.</div></div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>1️⃣</span> 선별기준(2004) — 변경 없음</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>고혈당 증상 발생 <strong>1주 이내</strong>의 케톤증 또는 케톤산증</li>
+        <li>내원 시 혈장포도당 <strong>≥16.0 mmol/L(≥288 mg/dL)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>2️⃣</span> 확진기준(2012) — 아래 3항목 모두 충족 시 확진</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ol style="padding-left:18px">
+        <li style="margin-bottom:6px">고혈당 증상 발생 후 <strong>약 7일 이내</strong> 당뇨병성 케톤증 또는 케톤산증 발생(내원 시 요·혈청 케톤체 상승)</li>
+        <li style="margin-bottom:6px">내원 시 혈장포도당 <strong>≥16.0 mmol/L(≥288 mg/dL)</strong> 및 <strong>HbA1c &lt;8.7%(NGSP)</strong><sup>†</sup></li>
+        <li>요중 C-펩타이드 배설 <strong>&lt;10 μg/day</strong> 또는 공복 혈청 C-펩타이드 <strong>&lt;0.3 ng/mL(&lt;0.10 nmol/L)</strong>, 정맥내 글루카곤(또는 식후) 부하 후 <strong>&lt;0.5 ng/mL(&lt;0.17 nmol/L)</strong></li>
+      </ol>
+      <div class="alert alert-warn" style="margin-top:10px"><span>⚠️</span><div><sup>†</sup>이 HbA1c 값(&lt;8.7% NGSP)은 <strong>이전에 내당능장애로 진단된 환자에는 적용되지 않음</strong> — 해당군은 HbA1c가 상대적으로 더 높게 나타날 수 있음(선행 연구: 평균 8.5%[JDS], 27.8%가 8.5%[JDS] 초과)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📌</span> 그 외 소견(Other findings) A–F</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul>
+        <li><strong>A)</strong> 항GAD항체·IA-2항체·인슐린항체 등 도세포관련 자가항체 — 일반적으로 검출되지 않음</li>
+        <li><strong>B)</strong> 인슐린치료 시작 전까지 유병기간 — 1~2주 정도</li>
+        <li><strong>C)</strong> 혈청 췌장효소(아밀라제·리파제·엘라스타제-1) 상승 — 환자의 <strong>98%</strong>에서 관찰</li>
+        <li><strong>D)</strong> 감기양 증상(발열·상기도증상) 또는 소화기증상(상복부통증·오심/구토) — 환자의 <strong>70%</strong>에서 발병 전 선행</li>
+        <li><strong>E)</strong> 임신 중 또는 분만 직후 발생 가능</li>
+        <li><strong>F)</strong> <strong>HLA DRB1*04:05-DQB1*04:01</strong>과의 연관성 보고 (2012년 신규 추가 항목)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔄</span> HbA1c 절단값 개정 근거</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul>
+        <li>382명의 신규진단 FT1D 환자 자료 분석 결과 HbA1c(NGSP) 평균 <strong>6.8%</strong>, 70.2%가 <strong>7.0% 미만</strong></li>
+        <li>2004년 기존 기준(JDS &lt;8.5%)을 단순 환산 시 NGSP &lt;8.9%가 되며, 이 경우 민감도 100%·특이도 97.5%</li>
+        <li>ROC곡선 분석 결과 민감도 100%를 유지하는 <strong>최소값</strong>이자 최적값으로 <strong>NGSP &lt;8.7%</strong>를 채택 — 초기 기준 확립 당시 "위음성(오진에 의한 사망) 방지"를 위해 민감도 100%를 우선시한 원칙을 유지</li>
+        <li>C-펩타이드 절단값 및 그 외 진단기준 항목은 지난 8년간 위원회 제출 자료를 근거로 <strong>개정 불필요</strong>로 판단</li>
+      </ul>
+      <div class="tbl-wrap" style="margin-top:8px">
+        <table class="tbl">
+          <tr><th>HbA1c(NGSP)</th><th>HbA1c(JDS)</th><th>특이도(%)</th><th>민감도(%)</th></tr>
+          <tr><td>8.5</td><td>8.1</td><td>100.0</td><td>98.4</td></tr>
+          <tr><td><strong>8.7(채택)</strong></td><td>8.3</td><td>99.2</td><td><strong>100.0</strong></td></tr>
+          <tr><td>8.9</td><td>8.5</td><td>99.2</td><td>100.0</td></tr>
+          <tr><td>9.1</td><td>8.7</td><td>95.9</td><td>100.0</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /criteria -->
+
+<!-- ══════════════════ TAB 2: 발견의 역사 ══════════════════ -->
+<div id="tab-history" class="panel">
+
+  <div class="alert alert-evid"><span>🔬</span><div>FT1D의 발견은 <strong>10년 이상 축적된 연구자료, 우연한 임상관찰, 일본 연구팀의 조직화</strong>라는 세 요소가 결합된 결과였다(Hanafusa 2020 회고).</div></div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧫</span> FT1D 개념 이전의 연구(1970s–1980s)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>1974년 Gian Franco Bottazzo의 도세포항체 발견 이후, T1D는 <strong>장기특이적 자가면역질환</strong>으로 규정되어 왔음</li>
+        <li>1980년대 초 연구진은 췌장섬이 인슐린분비 β세포와 면역공격 사이의 "전장"이라는 가설 하에 <strong>insulitis</strong>를 주 연구대상으로 삼음</li>
+        <li>간생검을 시행하던 동료들의 협조로 <strong>안전한 췌장생검법</strong>을 확립(1987년부터 신규발병 T1D 환자 대상 시행)</li>
+        <li>생검 연구를 통해 CD8⁺T림프구 우세 침윤, Fas-리간드 발현, MHC class I 과발현, MHC class II 이상발현 등 자가면역 관련 소견을 규명</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>💡</span> 발견의 계기 — 불일치 관찰</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="flow">
+        <div class="flow-box">신규발병 T1D 30명 생검</div><span class="flow-arrow">→</span>
+        <div class="flow-box">13명: insulitis·MHC class I 과발현 <strong>없음</strong></div><span class="flow-arrow">→</span>
+        <div class="flow-box">그중 3명: 급속 케톤산증 + 외분비조직 침윤(내분비조직은 아님)</div><span class="flow-arrow">→</span>
+        <div class="flow-box">공통 소견: 고혈당 + 근정상HbA1c + GADAb 음성</div>
+      </div>
+      <ul>
+        <li>당시 "케톤산증의 급속 진행"은 전형적 T1D의 특징으로 여겨졌으나, 일부 환자는 생검상 insulitis가 없어 <strong>미해결의 불일치</strong>로 남아있었음 — 이것이 새로운 T1D 아형(FT1D) 착안의 발단이 됨</li>
+        <li>오사카·효고현 <strong>9개 병원</strong> 의사들로 연구팀을 조직, 케톤산증을 동반한 신규발병 T1D 전수를 5년간 추적</li>
+        <li>총 <strong>56명</strong> 등록 → 항GADAb 양성/음성으로 나누어 HbA1c 값을 도식화 → GADAb음성군에서 상대적으로 낮은 HbA1c값이 좁은 구간에 뚜렷이 군집하는 별도의 클러스터(<strong>11명, 56명 중 19.6%</strong>) 확인</li>
+        <li>이 11명은 고혈당 증상 기간이 유의하게 짧고, 요중 C-펩타이드·동맥혈pH·혈청중탄산염이 낮으며, 외분비 췌장효소 농도가 높고 HbA1c가 낮은 특징을 공유 — 조직검사상 insulitis는 없고 <strong>외분비조직에 면역세포 침윤</strong>이 관찰됨</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🌏</span> 질병 개체로서의 확립 및 수용 과정</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul>
+        <li>2000년 미국 최상위 의학저널(NEJM)에 신규 T1D 아형으로 첫 보고 — 일본·동아시아 의료진은 신속히 수용(유사 환자 경험 다수)</li>
+        <li>서구 의료진은 수용이 더뎠으며, 다수가 새로운 질병 개체로서의 존재 자체를 부정하거나 경시함 — Paolo Pozzilli 그룹이 신속·긍정적으로 반응한 소수 예외 사례</li>
+        <li>이러한 반응 차이가 실제 지역별 유병률 차이를 반영하는지, 혹은 "T1D는 거의 전적으로 자가면역성"이라는 고정관념을 반영하는지는 불명확 — FT1D는 오랫동안 <strong>동아시아 지역특이적 질환</strong>으로 인식됨</li>
+        <li>JDS 위원회가 조직되어 <strong>전국조사(161명 FT1D vs 137명 자가면역T1D)</strong>를 통해 개념을 대규모로 재확인, 공식 질병개체로 확립</li>
+        <li>위원회 협력의 성과로 <strong>FT1D와 12번 염색체 CSAD/lnc-ITGB7-1 사이의 연관성</strong>을 규명한 전장유전체연관분석(GWAS) 발표</li>
+        <li>이러한 성과에 힘입어 FT1D는 WHO의 <strong>'Classification of Diabetes Mellitus 2019'</strong>에서 급성발병 T1D의 하위 범주로 명확히 기술됨</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /history -->
+
+<!-- ══════════════════ TAB 3: 특징·병태생리 ══════════════════ -->
+<div id="tab-feature" class="panel">
+
+  <div class="alert alert-preg"><span>🧬</span><div>FT1D는 아래 9가지 특징으로 요약되며(Fig. 3), 바이러스 감염이 항바이러스면역을 촉발해 숙주 면역계를 활성화시키고 β세포를 포함한 도세포를 급속·거의 완전히 파괴하는 기전이 제시된다(정확한 기전은 불명).</div></div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📋</span> FT1D의 특징 (Fig. 3, 9개 항목)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ol style="padding-left:18px">
+        <li style="margin-bottom:5px">고혈당 증상 발생 수일 이내의 급격한 케톤산증 발병</li>
+        <li style="margin-bottom:5px">현저한 고혈당임에도 상대적으로 낮은 HbA1c 수치</li>
+        <li style="margin-bottom:5px">발병 시점에도 거의 남아있지 않은 β세포</li>
+        <li style="margin-bottom:5px">발병에 앞선 소화기증상 또는 감기양 증상</li>
+        <li style="margin-bottom:5px">대개 음성인 도세포관련 자가항체</li>
+        <li style="margin-bottom:5px">혈청 아밀라제·리파제 상승</li>
+        <li style="margin-bottom:5px">임신과 연관되기도 함</li>
+        <li style="margin-bottom:5px">발병 5년 후 당뇨병 합병증 유병률 증가</li>
+        <li>감수성 일배체형으로서의 <strong>HLA DRB1*04:05-DQB1*04:01</strong></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧫</span> insulitis와 생검 시점의 역설</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>발병 직후 사망한 FT1D 환자의 췌장조직에서는 <strong>대량의 면역세포 침윤을 동반한 insulitis</strong>가 관찰됨</li>
+        <li>반면 초기 생검(발병 1~2개월 후 시행)에서 insulitis가 관찰되지 않았던 이유는, <strong>발병~생검 시점 사이의 시간 간극</strong> 동안 이미 급성 침윤 반응이 소실되었기 때문으로 추정</li>
+        <li>insulitis 부위의 <strong>비균질성(heterogeneity)</strong> 또한 소량의 생검 검체에서 병변이 우연히 검출되지 않았을 가능성으로 제시됨</li>
+        <li>종합하면, 면역세포의 대량 침윤은 <strong>발병 시점 전후에 집중적으로 발생했다가 빠르게 소실</strong>되는 것으로 해석됨</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧬</span> HLA·유전적 감수성</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul>
+        <li><strong>HLA DRB1*04:05-DQB1*04:01</strong>이 FT1D 환자 207명 중 <strong>32.6%</strong>에서 관찰되어 건강대조군(14.2%)보다 유의하게 높음(오즈비 2.9)</li>
+        <li>자가면역형·서서히진행형(slowly progressive)·급성발병형 T1D 3아형 간 HLA 연관성에 <strong>차이</strong>가 있음이 보고됨</li>
+        <li>GWAS를 통해 12번 염색체 <strong>CSAD/lnc-ITGB7-1</strong> 부위와의 강한 연관성이 추가로 규명됨</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /feature -->
+
+<!-- ══════════════════ TAB 4: 최신 동향 ══════════════════ -->
+<div id="tab-now" class="panel">
+
+  <div class="alert alert-future"><span>🌍</span><div>수년간 서구에서의 보고가 거의 없던 FT1D는, <strong>면역관문억제제(ICI) 치료의 면역관련 부작용(irAE)</strong>으로 발생한 사례들이 아시아 이외 지역에서 보고되며 다시 주목받고 있다.</div></div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>💊</span> 면역관문억제제(ICI) 관련 FT1D</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>다양한 악성종양에 대한 ICI(예: 항PD-1 pembrolizumab) 치료 도중 발생하는 <strong>irAE로서의 FT1D</strong> 사례가 보고됨</li>
+        <li>ICI 관련 FT1D는 ICI와 무관하게 자연발생하는 FT1D의 <strong>병태생리를 이해할 단서</strong>를 제공할 수 있음 — 면역관문 분자가 FT1D 발병기전 전반에 중요한 역할을 할 가능성 시사</li>
+        <li>FT1D 환자의 CD4⁺CD25<sup>high</sup> 조절T세포에서 <strong>CTLA-4 세포내 발현 감소</strong>가 보고되어 흥미로운 소견으로 언급됨</li>
+        <li>면역관문 분자 및 면역반응 억제경로는 향후 FT1D의 병인·치료 연구의 표적이 될 수 있음</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🏛️</span> JDS 위원회의 역할(20년)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li>1형당뇨병·면역학 등 여러 전문분야 연구자들이 <strong>일본 전역</strong>에서 모여 위원회를 구성, 지난 20년간 다수 논문을 공동 발표</li>
+        <li>위원회 구성원·위원장은 여러 차례 교체되었으나 <strong>지속적 협력관계</strong>를 유지</li>
+        <li>이 협력의 대표 성과가 앞서 언급한 GWAS(CSAD/lnc-ITGB7-1 연관성)이며, 이를 통해 FT1D가 <strong>WHO 당뇨병 분류(2019)</strong>에 급성발병 T1D 하위유형으로 공식 등재됨</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🏁</span> 저자의 결론(Hanafusa 2020)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul>
+        <li>FT1D의 발견·확립은 <strong>① 10년 이상 축적된 연구자료, ② 우연한(serendipitous) 임상관찰, ③ 일본 연구자들의 조직화</strong>라는 세 요소가 모두 갖춰져야 가능했던 성과로 요약됨</li>
+        <li>"극도로 급속한 케톤산증 발병에도 insulitis가 관찰되지 않는다"는 의문이 개념 정립의 결정적 계기가 됨 — 이는 발병시점과 생검시행시점 사이의 시간 간극을 반영한 것으로 밝혀짐</li>
+        <li>향후 연구가 FT1D의 병인·새로운 치료법에 대한 이해를 지속적으로 넓혀갈 것으로 기대됨</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /now -->
+
+</div><!-- /main -->
+
+<script>
+const STAT_DETAILS = {
+  cutoff: {
+    title: '진단기준 HbA1c 절단값', val: '<8.7% (NGSP), 민감도 100%', color: 'var(--diag)',
+    html: `<ul>
+      <li>382명의 신규진단 FT1D 환자 자료를 분석하고 ROC곡선 분석을 시행해 채택한 값 — 후보 절단값들(8.5~9.1%) 중 <strong>민감도 100%를 유지하는 최소값</strong>이자 최적값</li>
+      <li>같은 절단값에서 특이도는 <strong>99.2%</strong>(대조군: 자가면역형 제1A형 당뇨병 122명 기준)</li>
+      <li>2004년 기존 기준(JDS &lt;8.5%)을 NGSP로 단순 환산하면 &lt;8.9%가 되며, 이 경우 민감도 100%·특이도 97.5% — 새 절단값(8.7%)이 특이도 면에서 더 우수</li>
+      <li>초기 기준 확립(2004) 당시부터 "위음성으로 인한 오진이 곧 환자의 생명을 위협한다"는 원칙에 따라 <strong>민감도 100%를 최우선</strong>으로 설정해 온 방침을 그대로 유지</li>
+      <li>이 값은 <strong>이전에 내당능장애로 진단된 환자에는 적용되지 않음</strong> — 해당군은 발병 전부터 이미 어느 정도 고혈당에 노출되어 있어 HbA1c가 상대적으로 더 높게 측정될 수 있음</li>
+      <li>C-펩타이드 절단값 등 그 외 진단항목은 위원회에 제출된 최근 8년간의 신규 증례 자료를 근거로 개정이 불필요하다고 판단, 그대로 유지</li>
+    </ul>`
+  },
+  avg: {
+    title: '발병 시 평균 HbA1c', val: '6.8% (NGSP) · 70.2%가 7.0% 미만', color: 'var(--diag)',
+    html: `<ul>
+      <li>382명 FT1D 환자의 발병 시 HbA1c(NGSP) <strong>평균 6.8%</strong>(JDS 환산 시 6.4%) — 정상범위 상한에 가까운 "근정상(near-normal)" 수치</li>
+      <li>같은 환자군의 <strong>70.2%</strong>가 HbA1c 7.0% 미만으로, 뚜렷한 고혈당·케톤산증 소견과 극명한 대조를 이룸</li>
+      <li>HbA1c는 발병 전 1~2개월간의 혈당 변동을 반영하므로, 고혈당 진행이 빠를수록(즉 고혈당 노출 기간이 짧을수록) HbA1c는 낮게 유지됨 — 이것이 FT1D의 "급속한 혈당 악화"라는 질병 본질을 가장 잘 드러내는 지표로 채택된 이유</li>
+      <li>항GADAb 양성군(자가면역형)에서는 HbA1c 값이 넓게 분산되는 반면, GADAb 음성군(FT1D 포함)에서는 8.9% 미만군과 12.0% 이상군의 <strong>두 뚜렷한 클러스터</strong>로 나뉘는 양상이 관찰됨(Hanafusa 2020, Fig.2)</li>
+    </ul>`
+  },
+  proportion: {
+    title: '신규발병 케톤산증 T1D 중 FT1D 비율', val: '19.6% (11/56, 발견 당시 코호트)', color: 'var(--gene)',
+    html: `<ul>
+      <li>오사카·효고현 <strong>9개 병원</strong>이 참여한 연구팀이 5년간 케톤산증을 동반한 신규발병 T1D 환자 전수를 등록 — 총 <strong>56명</strong></li>
+      <li>항GADAb 양성/음성 기준으로 HbA1c 값을 도식화한 결과, 음성군 중 상대적으로 낮은 HbA1c값이 좁은 구간에 뚜렷이 군집하는 <strong>별도 클러스터 11명(19.6%)</strong>이 확인됨</li>
+      <li>이 11명은 대조군 대비 고혈당 증상 기간이 유의하게 짧고, 요중 C-펩타이드·동맥혈pH·혈청중탄산염이 낮으며, 외분비 췌장효소 농도가 높은 특징을 공유 — 조직검사상 insulitis는 없고 외분비조직에만 면역세포 침윤이 관찰됨</li>
+      <li>이 클러스터의 발견이 2000년 NEJM 최초 보고 이후 FT1D를 독립된 T1D 아형으로 확증하는 결정적 근거가 됨</li>
+      <li>이후 JDS 전국조사에서는 <strong>161명의 FT1D</strong>가 확인되어 137명의 자가면역형 T1D와 비교분석됨(더 큰 규모의 후속 확인)</li>
+    </ul>`
+  },
+  enzyme: {
+    title: '혈청 췌장효소 상승', val: '98%의 환자에서 관찰', color: 'var(--evid)',
+    html: `<ul>
+      <li>아밀라제, 리파제, 엘라스타제-1 중 하나 이상이 상승 — 2012년 확진기준의 "그 외 소견" <strong>C항목</strong></li>
+      <li>혈청 및 요 아밀라제·리파제 상승은 도세포(내분비)뿐 아니라 <strong>외분비 췌장조직</strong>도 병리과정에 관여함을 시사 — 실제로 초기 insulitis 음성 환자의 생검에서도 외분비조직 면역세포 침윤이 관찰된 바 있음</li>
+      <li>다른 대표 특징과 함께 FT1D의 임상 진단 시 유용한 보조 단서로 활용됨</li>
+      <li>동반 증상으로 감기양 증상(발열·상기도증상) 또는 소화기증상(상복부통증·오심/구토)이 환자의 <strong>70%</strong>에서 발병에 선행하는 것으로 보고됨</li>
+    </ul>`
+  },
+  hla: {
+    title: 'HLA DRB1*04:05-DQB1*04:01 연관성', val: 'FT1D 32.6% vs 건강대조군 14.2% (OR 2.9)', color: 'var(--preg)',
+    html: `<ul>
+      <li>FT1D 환자 <strong>207명</strong>을 대상으로 한 분석에서 32.6%가 DRB1*04:05-DQB1*04:01 일배체형을 보유 — 건강대조군(14.2%) 대비 유의하게 높음(오즈비 2.9)</li>
+      <li>2012년 개정 진단기준에 "그 외 소견" <strong>F항목</strong>으로 신규 추가된 연관 소견</li>
+      <li>자가면역형·서서히진행형(slowly progressive)·급성발병형 T1D 등 T1D의 3가지 아형 간에도 <strong>HLA 연관 양상에 차이</strong>가 있음이 별도로 보고됨(Kawabata et al. 2009)</li>
+      <li>이후 전장유전체연관분석(GWAS)을 통해 HLA 외에도 12번 염색체의 <strong>CSAD/lnc-ITGB7-1</strong> 부위가 FT1D 감수성과 강하게 연관됨이 추가로 규명됨(Kawabata et al. 2019)</li>
+    </ul>`
+  },
+  years: {
+    title: 'FT1D 개념의 정립 타임라인', val: '2000년 최초보고 → 2019년 WHO 분류 등재', color: 'var(--future)',
+    html: `<ul>
+      <li><strong>1987년~</strong>: 오사카대학 연구팀이 신규발병 T1D 환자 대상 췌장생검을 시작, insulitis·MHC 발현 이상 등 자가면역 소견을 규명하던 중 일부 환자에서 불일치 관찰</li>
+      <li><strong>2000년</strong>: 급속발병·도세포관련항체 음성을 특징으로 하는 신규 T1D 아형으로 NEJM에 최초 보고 — 일본·동아시아에서는 신속히 수용되었으나 서구에서는 수용이 더뎠음(Pozzilli 그룹은 예외적으로 신속 반응)</li>
+      <li><strong>2004년</strong>: JDS가 전국조사를 바탕으로 선별기준·진단기준을 최초 제정(HbA1c JDS &lt;8.5% 기준 포함)</li>
+      <li><strong>2003~2012년</strong>: JDS 전국조사로 161명 FT1D vs 137명 자가면역형 T1D 비교분석, 원 개념을 대규모로 재확인해 공식 질병개체로 확립</li>
+      <li><strong>2012년</strong>: HbA1c(JDS)에서 NGSP로 국제표준 전환에 따라 진단기준의 절단값을 &lt;8.7%(NGSP)로 개정, HLA 연관 소견(F항목) 추가</li>
+      <li><strong>2019년</strong>: GWAS로 12번 염색체 CSAD/lnc-ITGB7-1 연관성 규명 → 이 성과 등에 힘입어 WHO의 'Classification of Diabetes Mellitus 2019'에 급성발병 T1D의 하위유형으로 공식 등재</li>
+      <li><strong>2015년 이후</strong>: 면역관문억제제(ICI) 치료의 면역관련 부작용(irAE)으로서의 FT1D가 서구에서도 보고되며 아시아 지역특이 질환이라는 인식에서 벗어나 재조명됨</li>
+    </ul>`
+  }
+};
+
+function openStatModal(key) {
+  const d = STAT_DETAILS[key];
+  if (!d) return;
+  document.getElementById('stat-modal-title').textContent = d.title;
+  const valEl = document.getElementById('stat-modal-val');
+  valEl.textContent = d.val;
+  valEl.style.color = d.color;
+  valEl.style.fontWeight = '700';
+  valEl.style.fontSize = 'calc(14px * var(--fscale, 1))';
+  document.getElementById('stat-modal-body').innerHTML = d.html;
+  document.getElementById('stat-modal-overlay').classList.add('open');
+}
+function closeStatModal() {
+  document.getElementById('stat-modal-overlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeStatModal(); });
+
+const ABBR_DATA = [
+  { term:"FT1D", def:"Fulminant Type 1 Diabetes — 전격성(전격형) 제1형 당뇨병" },
+  { term:"T1D", def:"Type 1 Diabetes — 제1형 당뇨병" },
+  { term:"GADAb", def:"Glutamic Acid Decarboxylase Antibody — 항글루탐산탈탄산효소항체(도세포관련 자가항체)" },
+  { term:"HLA", def:"Human Leukocyte Antigen — 인간백혈구항원" },
+  { term:"NGSP", def:"National Glycohemoglobin Standardization Program — 미국 당화혈색소 표준화 프로그램 값" },
+  { term:"JDS", def:"Japan Diabetes Society — 일본당뇨병학회(구 HbA1c 값 체계 포함)" },
+  { term:"HbA1c", def:"당화혈색소 — 최근 1~2개월 혈당변동 반영" },
+  { term:"MHC", def:"Major Histocompatibility Complex — 주조직적합복합체" },
+  { term:"irAE", def:"Immune-Related Adverse Effect — 면역관련 부작용(면역관문억제제 치료의 부작용)" },
+  { term:"ICI", def:"Immune-Checkpoint Inhibitor — 면역관문억제제" },
+  { term:"CTLA-4", def:"Cytotoxic T-Lymphocyte-Associated protein 4 — 세포독성T림프구관련단백4(면역관문분자)" },
+  { term:"GWAS", def:"Genome-Wide Association Study — 전장유전체연관분석" },
+  { term:"WHO", def:"World Health Organization — 세계보건기구" },
+  { term:"CD8⁺", def:"세포독성T림프구 표지 — insulitis에서 우세하게 침윤하는 세포유형" },
+  { term:"C-peptide", def:"C-펩타이드 — 내인성 인슐린분비능 평가지표" },
+  { term:"IA-2", def:"Islet Antigen 2 — 도세포항원2(자가항체 표적)" },
+];
+
+function renderAbbrMain() {
+  const g = document.getElementById('abbr-main-grid');
+  if (g) g.innerHTML = ABBR_DATA.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+renderAbbrMain();
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') === `showTab('${id}')`) t.classList.add('active');
+  });
+}
+
+function toggleCard(hdr) {
+  hdr.classList.toggle('open');
+  const body = hdr.nextElementSibling;
+  body.classList.toggle('collapsed');
+}
+
+function toggleAcc(hdr) {
+  hdr.classList.toggle('open');
+  const body = hdr.nextElementSibling;
+  body.style.display = body.style.display === 'block' ? 'none' : 'block';
+}
+
+function filterAbbr(q) {
+  const drop = document.getElementById('abbr-dropdown');
+  const grid = document.getElementById('abbr-grid-drop');
+  const cnt  = document.getElementById('abbr-count');
+  q = q.trim().toLowerCase();
+  if (!q) { drop.style.display = 'none'; cnt.textContent = ''; return; }
+  const hits = ABBR_DATA.filter(a =>
+    a.term.toLowerCase().includes(q) || a.def.toLowerCase().includes(q)
+  );
+  cnt.textContent = hits.length || '';
+  if (!hits.length) { drop.style.display = 'none'; return; }
+  drop.style.display = 'block';
+  const inp = document.getElementById('abbr-input');
+  const rect = inp.getBoundingClientRect();
+  drop.style.top  = (rect.bottom + 4) + 'px';
+  drop.style.left = Math.max(8, rect.right - 460) + 'px';
+  grid.innerHTML = hits.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.tab-abbr-wrap')) {
+    document.getElementById('abbr-dropdown').style.display = 'none';
+    document.getElementById('abbr-count').textContent = '';
+  }
+});
+
+const FONT_ZOOM_STEPS = [100, 125, 150];
+let fontZoomIdx = 0;
+function cycleFontZoom() {
+  fontZoomIdx = (fontZoomIdx + 1) % FONT_ZOOM_STEPS.length;
+  const pct = FONT_ZOOM_STEPS[fontZoomIdx];
+  document.documentElement.style.setProperty('--fscale', pct / 100);
+  document.getElementById('font-zoom-label').textContent = pct + '%';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card-header:not(.open)').forEach(h => {
+    const b = h.nextElementSibling;
+    if (b) b.classList.add('collapsed');
+  });
+});
+</script>
+</body>
+</html>
