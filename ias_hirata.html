@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인슐린 자가면역증후군(Hirata병) 진료 참고자료</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --surface: #ffffff;
+    --surface2: #f0f2f5;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --text2: #57606a;
+    --dev: #0f6e5c;      /* 역학·분류 — 청록 */
+    --predict: #0550ae;  /* 병인·발병기전 — 청 */
+    --tx: #7c3aed;       /* 임상상 — 보라 */
+    --monitor: #9b1c2e;  /* 진단·치료 — 진홍 */
+    --accent: #7c3aed;
+    --green: #1a7f37;
+    --red: #cf222e;
+    --yellow: #9a6700;
+    --fscale: 1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: calc(13px * var(--fscale, 1));
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px 8px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px; position: sticky; top: 0; z-index: 100;
+  }
+  .header-inner { width: 100%; max-width: 1020px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .logo-row { display: flex; align-items: center; gap: 10px; justify-content: center; }
+  .logo-dr {
+    display: flex; align-items: center; gap: 0;
+    font-size: calc(11px * var(--fscale, 1)); font-weight: 800; letter-spacing: 1px;
+  }
+  .logo-dr span:nth-child(1) { background: var(--dev); color:#fff; padding:3px 7px; border-radius:4px 0 0 4px; }
+  .logo-dr span:nth-child(2) { background: var(--monitor); color:#fff; padding:3px 7px; border-radius:0 4px 4px 0; }
+  header h1 { font-size: 16px; font-weight: 700; color: var(--text); }
+  .meta-line { color: var(--text2); font-size: calc(11px * var(--fscale, 1)); text-align: center; line-height: 1.6; }
+  .source-link { color: var(--accent); font-size: calc(11px * var(--fscale, 1)); text-decoration: none; }
+  .source-link:hover { text-decoration: underline; }
+
+  .tab-bar {
+    display: flex; justify-content: center;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .font-zoom-btn {
+    display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+    margin: 4px 4px 4px 6px; padding: 5px 10px;
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+    color: var(--text2); font-size: calc(11px * var(--fscale, 1)); font-weight: 700;
+    cursor: pointer; user-select: none; white-space: nowrap; transition: background .15s;
+  }
+  .font-zoom-btn:hover { background: var(--border); }
+  .tab-bar-inner { width: 100%; max-width: 1020px; display: flex; align-items: center; justify-content: center; gap: 2px; }
+  .tab {
+    padding: 8px 10px; font-size: calc(12px * var(--fscale, 1)); color: var(--text2);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: color .15s, border-color .15s; user-select: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--dev); border-bottom-color: var(--dev); font-weight: 600; }
+  .tab-abbr-wrap { display: flex; align-items: center; padding: 4px 6px; margin-left: 4px; flex-shrink: 0; position: relative; }
+
+  .main { padding: 12px 16px; max-width: 1020px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  @media (max-width: 680px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .card-header {
+    background: var(--surface2); padding: 8px 12px;
+    font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text2);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; user-select: none;
+  }
+  .card-header .ch-title { display: flex; align-items: center; gap: 8px; }
+  .card-header .toggle { font-size: calc(14px * var(--fscale, 1)); transition: transform .2s; }
+  .card-header.open .toggle { transform: rotate(180deg); }
+  .card-body { padding: 10px 12px; }
+  .card-body.collapsed { display: none; }
+
+  .stat-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .stat-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; flex: 1; text-align: center; min-width: 90px; cursor: pointer; transition: box-shadow .15s, transform .1s, border-color .15s; position: relative; }
+  .stat-box:hover { box-shadow: 0 2px 10px rgba(0,0,0,.08); transform: translateY(-1px); border-color: var(--accent); }
+  .stat-box::after { content: '자세히 ▸'; position: absolute; right: 8px; bottom: 6px; font-size: calc(9px * var(--fscale, 1)); color: var(--text2); opacity: .6; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,18,22,.55); z-index: 500; align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--surface); border-radius: 10px; max-width: 600px; width: 100%; max-height: 82vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,.25); }
+  .modal-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: 0; background: var(--surface); }
+  .modal-head-title { font-size: calc(15px * var(--fscale, 1)); font-weight: 700; }
+  .modal-head-val { font-size: calc(12px * var(--fscale, 1)); color: var(--text2); margin-top: 2px; }
+  .modal-close { cursor: pointer; font-size: calc(18px * var(--fscale, 1)); color: var(--text2); line-height: 1; padding: 4px 6px; border-radius: 5px; user-select: none; }
+  .modal-close:hover { background: var(--surface2); color: var(--text); }
+  .modal-body { padding: 14px 16px; font-size: calc(12px * var(--fscale, 1)); line-height: 1.75; }
+  .modal-body ul { padding-left: 18px; margin: 4px 0; }
+  .modal-body li { margin-bottom: 6px; }
+  .modal-body .alert { margin: 8px 0; }
+  .stat-val { font-size: calc(17px * var(--fscale, 1)); font-weight: 700; }
+  .stat-lbl { font-size: calc(10px * var(--fscale, 1)); color: var(--text2); margin-top: 2px; line-height: 1.35; }
+
+  .alert { padding: 8px 12px; border-radius: 6px; font-size: calc(12px * var(--fscale, 1)); margin: 8px 0; display: flex; gap: 8px; align-items: flex-start; line-height: 1.55; }
+  .alert-danger  { background: #ffebe9; border-left: 3px solid var(--red);    color: #82071e; }
+  .alert-info    { background: #ede9fe; border-left: 3px solid var(--accent); color: #5b21b6; }
+  .alert-warn    { background: #fff8c5; border-left: 3px solid var(--yellow); color: #7d4e00; }
+  .alert-success { background: #dafbe1; border-left: 3px solid var(--green);  color: #116329; }
+  .alert-dev     { background: #e0f4f1; border-left: 3px solid var(--dev);  color: #0f5549; }
+  .alert-predict { background: #ddf4ff; border-left: 3px solid var(--predict); color: #0550ae; }
+  .alert-tx      { background: #ede9fe; border-left: 3px solid var(--tx);  color: #5b21b6; }
+  .alert-monitor { background: #fce8eb; border-left: 3px solid var(--monitor); color: var(--monitor); }
+
+  .tbl { width: 100%; border-collapse: collapse; font-size: calc(11px * var(--fscale, 1)); }
+  .tbl th { background: var(--surface2); color: var(--text2); padding: 6px 8px; font-size: calc(10px * var(--fscale, 1)); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 600; text-align: left; }
+  .tbl td { padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: rgba(0,0,0,.02); }
+  .tbl-wrap { overflow-x: auto; }
+
+  .freq-vhigh { background: #f5c6cb; color: #721c24; font-weight: 700; text-align: center; }
+  .freq-high  { background: #ffd8a8; color: #7d3b00; font-weight: 700; text-align: center; }
+  .freq-mod   { background: #fff3cd; color: #856404; font-weight: 700; text-align: center; }
+  .freq-low   { background: #d4edda; color: #155724; font-weight: 700; text-align: center; }
+
+  .acc { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; overflow: hidden; }
+  .acc-hdr { background: var(--surface2); padding: 7px 12px; font-size: calc(12px * var(--fscale, 1)); font-weight: 600; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+  .acc-hdr:hover { background: #e5e9ef; }
+  .acc-toggle { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); transition: transform .2s; }
+  .acc-hdr.open .acc-toggle { transform: rotate(180deg); }
+  .acc-body { display: none; padding: 10px 12px; font-size: calc(12px * var(--fscale, 1)); line-height: 1.65; }
+  .acc-body ul { padding-left: 16px; margin: 4px 0; }
+  .acc-body li { margin-bottom: 4px; }
+
+  .stage { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: calc(10px * var(--fscale, 1)); font-weight: 700; white-space: nowrap; }
+  .t-dev     { background: #e0f4f1; color: var(--dev); border: 1px solid var(--dev); }
+  .t-predict { background: #ddf4ff; color: var(--predict); border: 1px solid var(--predict); }
+  .t-tx      { background: #ede9fe; color: var(--tx); border: 1px solid var(--tx); }
+  .t-pref    { background: #dafbe1; color: var(--green); border: 1px solid var(--green); }
+  .t-notpref { background: #fff3cd; color: #7d4e00; border: 1px solid var(--yellow); }
+  .t-neg     { background: #fce8eb; color: var(--monitor); border: 1px solid var(--monitor); }
+
+  .abbr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+  .abbr-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; }
+  .abbr-term { font-weight: 700; color: var(--accent); font-size: calc(12px * var(--fscale, 1)); font-family: 'Courier New', monospace; }
+  .abbr-def  { font-size: calc(11px * var(--fscale, 1)); color: var(--text2); line-height: 1.45; }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #c8d0d9; border-radius: 3px; }
+
+  .sec-sep { height: 1px; background: var(--border); margin: 10px 0; }
+  small { color: var(--text2); font-size: calc(10px * var(--fscale, 1)); }
+
+  .stage-timeline { display: flex; align-items: stretch; gap: 0; margin: 10px 0; overflow-x: auto; }
+  .stage-box {
+    flex: 1; min-width: 130px; padding: 10px 10px 12px;
+    border-right: 2px solid var(--bg); text-align: center;
+    position: relative; cursor: pointer; transition: opacity .15s;
+  }
+  .stage-box:last-child { border-right: none; }
+  .stage-box:hover { opacity: .88; }
+  .stage-box .st-num { font-size: calc(13px * var(--fscale, 1)); font-weight: 800; margin-bottom: 4px; }
+  .stage-box .st-lbl { font-size: calc(10px * var(--fscale, 1)); line-height: 1.4; }
+  .st-dev     { background: #e0f4f1; }
+  .st-predict { background: #e6f0fb; }
+  .st-tx      { background: #ede9fe; }
+  .st-monitor { background: #fde8eb; }
+
+  .gear-row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+  .gear-box { flex: 1; min-width: 160px; border-radius: 6px; padding: 10px 12px; font-size: calc(12px * var(--fscale, 1)); }
+  .gear-dev     { background: #e0f4f1; border: 1.5px solid var(--dev); color: #0f5549; }
+  .gear-predict { background: #e6f0fb; border: 1.5px solid var(--predict); color: #0550ae; }
+  .gear-tx      { background: #ede9fe; border: 1.5px solid var(--tx); color: #5b21b6; }
+  .gear-monitor { background: #fde8eb; border: 1.5px solid var(--monitor); color: var(--monitor); }
+  .gear-title { font-weight: 700; font-size: calc(13px * var(--fscale, 1)); margin-bottom: 4px; }
+
+  .flow { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+  .flow-step { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; text-align: center; font-size: calc(12px * var(--fscale, 1)); font-weight: 600; }
+  .flow-arrow { text-align: center; color: var(--text2); font-size: calc(14px * var(--fscale, 1)); }
+  .flow-branch { display: flex; gap: 8px; }
+  .flow-branch > div { flex: 1; }
+  .flow-step.hl-dev { background: #e0f4f1; border-color: var(--dev); color: #0f5549; }
+  .flow-step.hl-predict { background: #e6f0fb; border-color: var(--predict); color: #0550ae; }
+  .flow-step.hl-monitor { background: #fde8eb; border-color: var(--monitor); color: var(--monitor); }
+  .flow-step.hl-tx { background: #ede9fe; border-color: var(--tx); color: #5b21b6; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-row">
+      <div class="logo-dr">
+        <span>I</span><span>A</span>
+      </div>
+      <h1>인슐린 자가면역증후군(Hirata병) 진료 참고자료</h1>
+    </div>
+    <div class="meta-line">
+      <span class="source-link">Cappellani D, Macchia E, Falorni A, Marchetti P. Insulin Autoimmune Syndrome (Hirata Disease): A Comprehensive Review Fifty Years After Its First Description. Diabetes Metab Syndr Obes. 2020;13:963–978. doi:10.2147/DMSO.S219438</span><br>
+      <span style="font-size: calc(10px * var(--fscale, 1));color:var(--text2);font-style:italic">본 도구는 저자·학회의 공식 승인을 받지 않은 개인 참고자료다 (This tool is not officially endorsed by the authors or any society)</span>
+    </div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab-bar-inner">
+    <div id="font-zoom-btn" class="font-zoom-btn" onclick="cycleFontZoom()"><span class="fz-icon">🔠</span><span id="font-zoom-label">100%</span></div>
+    <div class="tab active" onclick="showTab('overview')">🏠 개요</div>
+    <div class="tab" onclick="showTab('epi')">🌍 역학·분류</div>
+    <div class="tab" onclick="showTab('etio')">🧬 병인·발병기전</div>
+    <div class="tab" onclick="showTab('clinic')">🩺 임상상</div>
+    <div class="tab" onclick="showTab('dx')">🔎 진단</div>
+    <div class="tab" onclick="showTab('tx')">💊 치료·예후</div>
+    <div class="tab-abbr-wrap">
+      <div style="position:relative;display:flex;align-items:center;flex-shrink:0">
+        <span style="position:absolute;left:8px;color:var(--text2);font-size: calc(12px * var(--fscale, 1));pointer-events:none">🔍</span>
+        <input id="abbr-input" type="text" placeholder="약어 검색" oninput="filterAbbr(this.value)"
+          style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 8px 4px 26px;color:var(--text);font-size: calc(12px * var(--fscale, 1));width:130px;outline:none;"
+          onfocus="this.style.borderColor='var(--dev)'" onblur="this.style.borderColor='var(--border)'">
+        <span id="abbr-count" style="position:absolute;right:7px;font-size: calc(10px * var(--fscale, 1));color:var(--text2);pointer-events:none"></span>
+      </div>
+      <div id="abbr-dropdown" style="display:none;position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px;width:460px;max-height:360px;overflow-y:auto;z-index:300;box-shadow:0 8px 24px rgba(0,0,0,.12)">
+        <div id="abbr-grid-drop" style="display:grid;grid-template-columns:1fr"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="stat-modal-overlay" class="modal-overlay" onclick="if(event.target===this) closeStatModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div id="stat-modal-title" class="modal-head-title">제목</div>
+        <div id="stat-modal-val" class="modal-head-val">수치</div>
+      </div>
+      <span class="modal-close" onclick="closeStatModal()">✕</span>
+    </div>
+    <div id="stat-modal-body" class="modal-body">내용</div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════ TAB 1: 개요 ══════════════════ -->
+<div id="tab-overview" class="panel active">
+
+  <div class="stat-row">
+    <div class="stat-box" onclick="openStatModal('history')"><div class="stat-val" style="color:var(--dev)">1970년</div><div class="stat-lbl">Yukimasa Hirata가<br>최초 기술(47세 비만 남성)</div></div>
+    <div class="stat-box" onclick="openStatModal('remission')"><div class="stat-val" style="color:var(--predict)">약 82%</div><div class="stat-lbl">자연 관해율<br>(1970–1992년 197명 분석)</div></div>
+    <div class="stat-box" onclick="openStatModal('hla')"><div class="stat-val" style="color:var(--tx)">DRB1*0406</div><div class="stat-lbl">가장 강력한<br>HLA 연관 대립유전자</div></div>
+    <div class="stat-box" onclick="openStatModal('drugs')"><div class="stat-val" style="color:var(--monitor)">메티마졸·<br>알파리포산</div><div class="stat-lbl">근거 강도 "High"<br>약물유발 원인 2종</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔑</span> 핵심 요약</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-dev">
+        <span>✅</span>
+        <div>인슐린 자가면역증후군(IAS, Hirata병)은 <strong>고역가 인슐린자가항체(IAA)</strong>에 의한 자발성 고인슐린혈성 저혈당을 특징으로 하는 드문 질환이다. 유전적 소인(특히 HLA-DR4 계열)을 가진 개체에서 <strong>약물(메티마졸·알파리포산 등)이나 바이러스감염</strong>이 방아쇠가 되어 발생하며, 인슐린-IAA 복합체가 혈당과 무관하게 인슐린을 방출하는 <strong>이중위상(double-phase) 기전</strong>으로 저혈당을 일으킨다. 진단의 골드스탠다드는 <strong>혈중 IAA 검출</strong>이며, 자연 관해 경향이 강해 대부분 식이조절 등 보존적 관리로 충분하다.</div>
+      </div>
+      <div class="gear-row" style="margin-top:10px">
+        <div class="gear-box gear-dev">
+          <div class="gear-title">🌍 역학·분류</div>
+          일본에서 처음 기술, 전세계로 확산 중<br>
+          <small>이전 노출 유무·동반 자가면역질환·약물유발 여부로 분류</small>
+        </div>
+        <div class="gear-box gear-predict">
+          <div class="gear-title">🧬 병인·발병기전</div>
+          HLA-DR4(DRB1*0406) 유전적 소인 + 유발약물/바이러스<br>
+          <small>고결합능·저친화도 IAA가 이중위상 혈당변동을 유발</small>
+        </div>
+        <div class="gear-box gear-tx">
+          <div class="gear-title">🩺 임상상</div>
+          대개 식후 저혈당, 때로 고혈당→저혈당 요동<br>
+          <small>중증 시 경련·의식소실까지 가능</small>
+        </div>
+        <div class="gear-box gear-monitor">
+          <div class="gear-title">🔎💊 진단·치료</div>
+          IAA 검사가 확진 필수, 인슐린/C-peptide비 등은 보조<br>
+          <small>보존치료 우선, 중증 시 스테로이드·리툭시맙 등 고려</small>
+        </div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:8px">
+        <span>⚠️</span>
+        <div>치료법 간 비교연구가 없고 대부분 증례보고·소규모 증례군 수준의 근거이다. 첫 치료로 반드시 약물요법이 필요한 것은 아니며, 자연 관해율이 높다는 점을 항상 고려해야 한다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📈</span> 역사적 이정표</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="stage-timeline">
+        <div class="stage-box st-dev" onclick="openStatModal('h1970')">
+          <div class="st-num" style="color:var(--dev)">1970</div>
+          <div class="st-lbl">Hirata 등 최초기술<br>(47세 비만 남성,<br>반복 중증 저혈당)</div>
+        </div>
+        <div class="stage-box st-predict" onclick="openStatModal('h1983')">
+          <div class="st-num" style="color:var(--predict)">1983</div>
+          <div class="st-lbl">Sulphydryl계 약물<br>(메티마졸) 노출과의<br>연관성 확인</div>
+        </div>
+        <div class="stage-box st-tx" onclick="openStatModal('h1990s')">
+          <div class="st-num" style="color:var(--tx)">1990년대</div>
+          <div class="st-lbl">HLA-DR4 연관 확인(1992)<br>제7형 과민반응으로<br>분류(1995)</div>
+        </div>
+        <div class="stage-box st-monitor" onclick="openStatModal('h2000s')">
+          <div class="st-num" style="color:var(--monitor)">2000년대~</div>
+          <div class="st-lbl">전세계 증례 증가,<br>서구권 보고 확대<br>알파리포산 연관 급증</div>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <span>💡</span>
+        <div>2009년 기준 전세계 보고 <strong>380예</strong>(1970–2009년), 당시 90% 이상이 일본에서 보고 — 일본 내에서는 인슐린종·췌장외종양에 이어 자발성 저혈당의 <strong>3번째 흔한 원인</strong>으로 알려짐. 최근에는 서구권 보고가 빠르게 증가하는 추세.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /overview -->
+
+<!-- ══════════════════ TAB 2: 역학·분류 ══════════════════ -->
+<div id="tab-epi" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🌍</span> 역학</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>정확한 발생률은 진단의 어려움, 자연관해 경향, 질환 인지도 부족으로 <strong>과소평가</strong>되어 있을 가능성이 큼</li>
+        <li>일본: 2019년 최신 연구에서 일반인구 <strong>10만명당 0.017예</strong> 추정 유병률</li>
+        <li>한국: 내인성 고인슐린혈성 저혈당 정밀검사 대상 84명 중 5명(6%)이 IAS로 확인</li>
+        <li>중국: 30년간 전국 설문조사에서 73예만 확인되어 상대적으로 낮은 보고율</li>
+        <li>서구: 1972년 첫 백인 증례 보고 이후 지속적으로 드물게 여겨졌으나, 최근 수십 년간 보고 증가</li>
+        <li>성별: 대체로 양성 비슷하나, <strong>여성은 40대(4번째 10년), 남성은 70대(7번째 10년)</strong>에 발병 정점 — 시간적 차이 존재</li>
+        <li>소아에서는 드물지만 산발적 보고 존재</li>
+        <li>지역별 편차는 원래 HLA체계 대립유전자의 진화적 분포로 설명되었으나, 최근 전세계적으로 고르게 증가하는 추세는 유발약물 사용 확대 또는 진단 인지도·IAA검사 가용성 향상 때문일 가능성 제기 — 논쟁 중</li>
+      </ul>
+      <div class="acc">
+        <div class="acc-hdr" onclick="toggleAcc(this)"><span>📊 Table 1 — 주요 역학 연구 요약</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body">
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <tr><th>저자(연도)</th><th>연구집단</th><th>추정 발생률/유병률</th><th>인종</th></tr>
+              <tr><td>Takayama-Hasumi(1990)</td><td>2094개 일본 병원, 저혈당 입원환자</td><td>선택코호트 11.7%(41/350명)</td><td>일본</td></tr>
+              <tr><td>Uchigata(1994)</td><td>1970–1992 일본 내 보고례</td><td>연 9예(22년간 197예)</td><td>일본</td></tr>
+              <tr><td>Uchigata(2000)</td><td>1970–1997 발표 증례 리뷰</td><td>일본 연 9예(244/27년) / 백인 연 1예(26/27년)</td><td>일본/백인</td></tr>
+              <tr><td>Uchigata(2009)</td><td>1970–2007 발표 증례 리뷰</td><td>연 10.3예(380예/37년)</td><td>전세계</td></tr>
+              <tr><td>Woo(2015)</td><td>고인슐린혈성 저혈당 입원환자</td><td>선택코호트 6%(5/84명)</td><td>한국</td></tr>
+              <tr><td>Wang(2015)</td><td>전국 설문조사</td><td>연 2.6예(73/28년)</td><td>중국</td></tr>
+              <tr><td>Yamada(2019)</td><td>내인성 고인슐린혈성 저혈당 전국조사</td><td>선택코호트 4.9%(22/447명), 일반인구 10만명당 0.017예</td><td>일본</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🗂️</span> 분류</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li><strong>① 외인성 인슐린 노출 유무:</strong> 원래 정의는 "외인성 인슐린 노출이 없던 환자"였으나, 인슐린치료 중인 당뇨환자에서도 IAA와 유사한 특성을 가진 인슐린항체가 발생해 유사한 임상상을 보이는 증례가 보고됨</li>
+        <li><strong>② 동반 자가면역질환 유무:</strong> 단독 발현 vs 다발성 자가면역내분비증후군(type 3A 또는 type 4 APS)의 일부로 발현. Graves병과의 연관은 독립적 공존이 아니라, <strong>항갑상선제(항티록신) 치료 자체가 IAS의 유발원인</strong>이 되는 경우가 많음이 확인됨 — 이 연관은 아시아보다 백인에서 더 흔히 기술됨</li>
+        <li><strong>③ 약물유발 vs 자발성:</strong> 1970–1991년 일본 197예 분석에서 약물유발형 43% 추정, 2009년 백인 인구에서는 약 50%로 추정. 최근에는 유발약물 목록이 계속 확장되며 실제 약물유발 비율이 <strong>80% 이상</strong>일 수 있다는 가설 제기 — 자발성으로 분류된 증례도 실제로는 미인지된 유발요인이 있었을 가능성 시사</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /epi -->
+
+<!-- ══════════════════ TAB 3: 병인·발병기전 ══════════════════ -->
+<div id="tab-etio" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧬</span> 유전적 소인 — HLA 연관</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>가장 널리 인정되는 이론: <strong>유전적 소인 + 환경적 방아쇠</strong>의 상호작용으로 병원성 IAA 생성</li>
+        <li>면역유전학적 결정인자는 <strong>Class II HLA계</strong> 유전자 — HLA-DR4, 특히 <strong>DRB1*0406</strong>과 강한 연관(덜 유의하게 DRB1*0403, DRB1*0407)</li>
+        <li>일본인에서 DRB1*0406 빈도가 높아 서구 대비 IAS 발생률이 높다는 가설의 근거가 됨</li>
+        <li><strong>메티마졸 유발 IAS</strong>: Graves병 환자 중 메티마졸 노출 후 IAS가 발생한 경우 예외없이 DRB1*0406 보유 — 일본 외 지역에서 메티마졸 유발 IAS가 드문 이유로 이 대립유전자의 낮은 유병률이 제시됨</li>
+        <li><strong>알파리포산 유발 IAS</strong>: 원래 일본인에서 DRB1*0406과 연관된다고 보고되었으나, 백인·타 아시아인 집단에서는 확인되지 않음</li>
+        <li>아시아 외 지역의 최근 증례들은 위 면역유전학적 연관성을 일관되게 확인하지 못해, <strong>질환의 유전적 스펙트럼이 예상보다 넓을 가능성</strong> 시사 — 추가 연구 필요</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>💊</span> 유발요인 — 약물</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-predict"><span>ℹ️</span><div>중요도 순으로 약물 > 바이러스 > 혈액질환 순으로 방아쇠 역할이 보고됨. 대부분의 유발약물은 <strong>sulphydryl(설프하이드릴)기·환원성 화합물</strong>로, 인슐린 A·B사슬 간 이황화결합을 절단해 분자구조를 변형시켜 내인성 인슐린의 면역원성을 높이는 것으로 추정된다(A사슬 선형 절편에 대한 항원제시 증가 → 자가반응 T-helper세포 활성화). 단, sulphydryl기가 없는 알부민 같은 약물에서도 보고되어 이 기전만으로 완전히 설명되지는 않는다.</div></div>
+      <div class="acc" style="margin-top:8px">
+        <div class="acc-hdr open" onclick="toggleAcc(this)"><span>💊 Table 2 — IAS 유발 연관 약물 전체 목록</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body" style="display:block">
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <tr><th>분류</th><th>약물</th><th>연관 강도</th></tr>
+              <tr><td rowspan="2">항갑상선제</td><td>메티마졸(Methimazole)</td><td class="freq-vhigh">High</td></tr>
+              <tr><td>카비마졸(Carbimazole)</td><td class="freq-mod">Medium</td></tr>
+              <tr><td rowspan="4">보충제</td><td>알파리포산(Alpha-lipoic acid)</td><td class="freq-vhigh">High</td></tr>
+              <tr><td>피리티놀(Pyritinol)</td><td class="freq-low">Low</td></tr>
+              <tr><td>글루타치온(Glutathione)</td><td class="freq-low">Low</td></tr>
+              <tr><td>메티오닌(Methionine)</td><td class="freq-low">Low</td></tr>
+              <tr><td rowspan="4">항고혈압제</td><td>캡토프릴(Captopril)</td><td class="freq-low">Low</td></tr>
+              <tr><td>하이드랄라진(Hydralazine)</td><td class="freq-low">Low</td></tr>
+              <tr><td>프로카인아마이드(Procainamide)</td><td class="freq-low">Low</td></tr>
+              <tr><td>딜티아젬(Diltiazem)</td><td class="freq-low">Low</td></tr>
+              <tr><td>항혈소판제</td><td>클로피도그렐(Clopidogrel)</td><td class="freq-low">Low</td></tr>
+              <tr><td rowspan="2">경구혈당강하제</td><td>톨부타마이드(Tolbutamide)</td><td class="freq-low">Low</td></tr>
+              <tr><td>글리클라지드(Gliclazide)</td><td class="freq-low">Low</td></tr>
+              <tr><td rowspan="3">항염증제</td><td>스테로이드(Steroids)</td><td class="freq-low">Low</td></tr>
+              <tr><td>록소프로펜나트륨(Loxoprofen-sodium)</td><td class="freq-low">Low</td></tr>
+              <tr><td>디클로페낙(Diclofenac)</td><td class="freq-low">Low</td></tr>
+              <tr><td>근이완제</td><td>톨페리손염산염(Tolperisone HCl)</td><td class="freq-low">Low</td></tr>
+              <tr><td rowspan="4">항생제</td><td>페니실라민(Penicillamine)</td><td class="freq-low">Low</td></tr>
+              <tr><td>이미페넴(Imipenem)</td><td class="freq-low">Low</td></tr>
+              <tr><td>페니실린G(Penicillin G)</td><td class="freq-low">Low</td></tr>
+              <tr><td>이소니아지드(Isoniazid)</td><td class="freq-low">Low</td></tr>
+              <tr><td rowspan="2">양성자펌프억제제</td><td>판토프라졸(Pantoprazole)</td><td class="freq-low">Low</td></tr>
+              <tr><td>오메프라졸(Omeprazole)</td><td class="freq-low">Low</td></tr>
+              <tr><td>혈장단백</td><td>알부민(Albumin)</td><td class="freq-low">Low</td></tr>
+              <tr><td>희귀약물</td><td>티오프로닌(Tiopronin)</td><td class="freq-low">Low</td></tr>
+            </table>
+          </div>
+          <small>연관 강도: Low(보고 5건 미만), Medium(5–9건), High(10건 초과). 메티마졸과 알파리포산이 가장 확립된 원인이며, 최근 10년간 <strong>알파리포산 유발 증례가 메티마졸을 추월</strong>하는 추세.</small>
+        </div>
+      </div>
+      <ul style="padding-left:18px;line-height:1.8;margin-top:8px">
+        <li>알파리포산은 항산화 효과로 당뇨병성 신경병증, 다낭성난소증후군, 중추신경계 질환 보조요법 및 다이어트·항노화 보충제로 널리 처방됨 — 노출인구 확대가 증례 증가의 배경으로 추정</li>
+        <li>발병 시점: 원인약물 투여 후 <strong>수일~수개월</strong>까지 다양, 평균 4–6주로 추정. 드물게는 재투여(2차 치료주기) 후 수년 뒤 발생하는 경우도 보고</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🦠</span> 유발요인 — 바이러스·혈액질환</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li><strong>바이러스감염</strong>: 홍역, 유행성이하선염, 풍진, 수두대상포진, 콕사키B, C형간염 바이러스 등이 유발요인으로 보고 — 초항원(super-antigen)으로 작용해 IAA 생성을 촉발하는 기전이 제시됨</li>
+        <li><strong>혈액질환</strong>: 다발골수종, 미확정 단클론감마글로불린증(MGUS) 등과의 연관이 백인에서 보고됨</li>
+        <li><strong>자발성(spontaneous-onset)</strong>: 뚜렷한 유발요인이 확인되지 않는 경우로, 주로 일본에서 보고되며 서구에서는 드묾. 일부 저자는 "자발성"으로 분류된 증례도 실제로는 <strong>미인지된 유발요인</strong>이 있었을 가능성을 제기</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>⚙️</span> 발병기전 — 이중위상(Double-Phase) 기전</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-tx"><span>🔬</span><div>IAS는 순환 항원에 대한 자가항체가 특징인 <strong>제7형 과민반응</strong>으로 분류된다. 핵심은 순환 인슐린자가항체(IAA)이며, 이는 내인성 인슐린 분자에 대한 면역글로불린(대부분 IgG, 드물게 IgA·IgM)이다.</div></div>
+      <ul style="padding-left:18px;line-height:1.8;margin-top:8px">
+        <li>IAA의 특징은 <strong>높은 결합능(high binding capacity) + 낮은 친화도(low affinity)</strong> — 다수의 인슐린 분자와 결합해 대형 항원-항체 복합체를 형성하지만, 낮은 친화도로 인해 자발적 해리율이 높음</li>
+        <li>건강한 헌혈자의 최대 2%에서도 저역가 IAA가 검출될 수 있으나 병적 의미는 없음</li>
+        <li>외인성 인슐린 노출 후 발생하는 인슐린항체는 대개 <strong>고친화도·저결합능</strong>이어서 작은 복합체를 형성 → 자발적 해리율이 낮아 유의한 혈당변동을 일으키지 않음(단, 드물게 IAA와 유사한 특성을 보이는 예외 존재)</li>
+      </ul>
+      <div class="flow" style="margin-top:10px">
+        <div class="flow-step hl-dev">1단계(식후 초기): 췌장 β세포가 분비한 인슐린이 IAA와 결합 → 인슐린-IAA 복합체 형성</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step hl-predict">복합체 상태의 인슐린은 수용체에 작용 못함 → 유리(unbound) 인슐린 부족 → 일과성 식후 고혈당</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step hl-tx">고혈당이 추가 인슐린 분비를 자극 → 일부는 복합체에 재결합, 일부는 유리상태로 작용</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step hl-monitor">2단계: 혈당이 하강해도 복합체로부터 인슐린의 자발적 해리는 멈추지 않음 → 유리 인슐린 상대적 과잉 → 저혈당 유발</div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:8px"><span>⚠️</span><div>인슐린종과의 감별과정에서 침습적 검사(수술 등)를 시행했던 일부 증례의 병리소견에서 췌도세포과형성 또는 결절아세포증(nesidioblastosis)이 확인된 바 있음 — 초기 오진 가능성에 유의</div></div>
+    </div>
+  </div>
+
+</div><!-- /etio -->
+
+<!-- ══════════════════ TAB 4: 임상상 ══════════════════ -->
+<div id="tab-clinic" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🩺</span> 임상 양상</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>중증도·지속기간·관해율이 매우 다양함 — 핵심 소견은 <strong>저혈당</strong></li>
+        <li><strong>자율신경 증상</strong>: 공복감, 발한, 떨림, 불안</li>
+        <li><strong>신경당결핍(neuroglycopenic) 증상</strong>: 과민성, 행동변화, 혼돈, 기억상실, 경련, 의식소실</li>
+        <li>반복 저혈당 환자는 건강한 사람보다 증상을 유발하는 혈당 역치가 <strong>더 낮음</strong> — 저혈당 무자각증 가능성 고려</li>
+        <li>대개 경도이나, 중증(경련·혼수까지)으로 발현하는 증례도 다수 보고됨</li>
+      </ul>
+      <div class="acc">
+        <div class="acc-hdr" onclick="toggleAcc(this)"><span>⏱️ 저혈당 발생 시점 및 혈당 변동 양상</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>대부분 <strong>식후 저혈당</strong>(발병기전과 일치) — 단, 공복 저혈당이나 예측 불가능한 저혈당 발현례도 존재</li>
+            <li>전형적 양상: <strong>식후 초기 고혈당 → 반응성 저혈당</strong>으로 이어지는 요동(가장 처음 보고된 백인 증례에서도 이 양상 확인)</li>
+            <li>HbA1c는 저혈당 빈도·중증도, 혈당요동 존재에 따라 정상~상승까지 다양하게 나타날 수 있음</li>
+            <li>장기간 미인지 상태로 지속된 IAS에서는 체중증가가 보고됨 — 저혈당 보정을 위한 섭취증가 때문인지, 고인슐린혈증의 동화작용 효과 때문인지는 명확히 규명되지 않음</li>
+          </ul>
+        </div>
+      </div>
+      <div class="alert alert-info" style="margin-top:4px"><span>ℹ️</span><div>IAS가 더 넓은 자가면역 현상(다발성 자가면역내분비증후군, PGA)의 일부로 발현하는 경우, 저혈당이 다른 자가면역 질환(타 내분비샘, 타 장기·계통)에 <strong>선행·동반·후행</strong>할 수 있다.</div></div>
+    </div>
+  </div>
+
+</div><!-- /clinic -->
+
+<!-- ══════════════════ TAB 5: 진단 ══════════════════ -->
+<div id="tab-dx" class="panel">
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🔀</span> 진단 흐름도</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="flow">
+        <div class="flow-step">저혈당을 주소로 내원한 환자</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step hl-dev">저혈당 확인(Whipple triad): 증상/징후 + 혈당 ≤70mg/dL + 포도당 투여 후 증상 호전</div>
+        <div class="flow-arrow">↓ (자발적 저혈당 없으면 최대 72시간 금식검사)</div>
+        <div class="flow-step hl-predict">저혈당 발생 시점 인슐린농도 측정</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-branch">
+          <div class="flow-step hl-monitor">고인슐린혈성 저혈당</div>
+          <div class="flow-step">저인슐린혈성 저혈당(타 원인 감별)</div>
+        </div>
+        <div class="flow-arrow">↓ (고인슐린혈성인 경우) — C-peptide·proinsulin 측정</div>
+        <div class="flow-branch">
+          <div class="flow-step hl-tx">C-peptide·proinsulin 낮음<br>→ 외인성 고인슐린혈증<br>(경구혈당강하제 or 인슐린 투여)</div>
+          <div class="flow-step hl-tx">C-peptide·proinsulin 높음/부적절히 정상<br>→ 내인성 고인슐린혈증<br>(인슐린종 or IAS)</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step hl-monitor">인슐린/C-peptide 몰비, PEG침전, <strong>IAA검사(확진)</strong>, 경구혈당강하제 검사, 영상검사로 최종 감별</div>
+      </div>
+      <small style="display:block;margin-top:8px">PEG = polyethylene glycol(폴리에틸렌글리콜), IAA = insulin autoantibodies(인슐린자가항체)</small>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🧪</span> 단계별 검사 해석</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="acc">
+        <div class="acc-hdr open" onclick="toggleAcc(this)"><span>1️⃣ 저혈당 확인 & 인슐린 농도</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body" style="display:block">
+          <ul>
+            <li>Whipple triad 확인이 필수 — 저혈당 증상은 특이적이지 않으므로 반드시 객관적 확인 필요</li>
+            <li>자발적 저혈당이 없으면 최대 72시간 금식검사로 유발, 경구포도당내성검사는 일상적으로 권장되지 않음(IAS 환자 개인 내·개인 간 반응 변동성이 큼)</li>
+            <li>IAS 환자는 특징적으로 <strong>인슐린농도 &gt;1000 pmol/L</strong>로 매우 높게 측정되는 경우가 많음 — 타 고인슐린혈증에서는 드문 소견</li>
+            <li>검사키트에 따라 측정치 편차가 큼 — <strong>IRMA(면역방사계수법)</strong>가 유리(unbound) 인슐린 정량에 <strong>ICMA(면역화학발광법)</strong>보다 더 정확</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc">
+        <div class="acc-hdr" onclick="toggleAcc(this)"><span>2️⃣ C-peptide · Proinsulin</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>췌장 β세포는 인슐린과 C-peptide를 등몰비로 분비하나 반감기가 다름(인슐린 5–10분 vs C-peptide 30–35분)</li>
+            <li>낮은 C-peptide·proinsulin → 외인성 인슐린 투여 의심</li>
+            <li>높거나 부적절히 정상인 C-peptide·proinsulin → 내인성 고인슐린혈증(인슐린종 또는 IAS) 시사</li>
+            <li>단, 이 검사만으로는 경구혈당강하제(설폰요소제 등)에 의한 저혈당은 배제할 수 없음 — 별도로 혈중 약물농도 검사 필요</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc">
+        <div class="acc-hdr" onclick="toggleAcc(this)"><span>3️⃣ 인슐린/C-peptide 몰비</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>생리적으로 인슐린/C-peptide 몰비는 &lt;1(C-peptide 반감기가 더 길기 때문)</li>
+            <li>이론상 IAS에서는 인슐린-IAA 복합체의 긴 반감기로 인해 몰비가 &gt;1로 역전될 수 있음(외인성 인슐린 투여 시에도 유사하게 역전 — 내인성 분비 억제로 C-peptide가 낮아짐)</li>
+            <li>단, C-peptide·proinsulin 농도 자체가 IAA의 결합능·면역분석 간섭에 따라 크게 변동할 수 있어 진단적 신뢰도에 대한 비판이 있음</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc">
+        <div class="acc-hdr" onclick="toggleAcc(this)"><span>4️⃣ PEG 침전 & IAA 검사(확진)</span><span class="acc-toggle">▾</span></div>
+        <div class="acc-body">
+          <ul>
+            <li><strong>PEG(폴리에틸렌글리콜) 침전 후 상청액 인슐린 측정</strong>: IAS 환자 혈청에서는 건강대조군보다 인슐린 회수율이 현저히 낮음(5–10% vs &gt;70%) — 예비 선별검사로 유용, 모든 클래스의 IAA를 침전시킬 수 있음</li>
+            <li><strong>IAA 역가 측정이 확진에 필수</strong> — IAS 진단이 가능한 유일하게 신뢰도 높은 검사. 단, 상용 분석키트 대부분이 IgG 클래스만 검출 가능해 드문 IgA·IgM형 IAA에서는 위음성 가능</li>
+            <li>IAA 검사의 가용성이 제한적이고 결과 확인까지 지연되므로, 위 예비검사들로 먼저 접근하는 것이 실용적</li>
+            <li><strong>Scatchard 분석</strong>으로 항체의 결합능·친화도 특성 규명 가능 — IAS의 전형적 항체는 고결합능·저친화도</li>
+            <li>영상검사는 IAS 진단에 무용하나, 감별진단 과정에서 불필요한 고가의 영상검사·침습적 시술로 이어지는 경우가 실제로 흔함(우연 발견 병변이 추가 검사를 유발)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>⚖️</span> 감별진단 — Table 3 전체 비교</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>질환</th><th>인슐린</th><th>C-peptide</th><th>Proinsulin</th><th>Ins/C-pep 몰비</th><th>경구혈당강하제</th><th>PEG 회수율</th><th>항체검사</th><th>영상</th></tr>
+          <tr><td><strong>인슐린종</strong></td><td>↑</td><td>↑/부적절히정상</td><td>↑/부적절히정상</td><td>&lt;1</td><td>음성</td><td>정상(&gt;70%)</td><td>음성</td><td>양성 가능</td></tr>
+          <tr><td><strong>결절아세포증</strong></td><td>↑</td><td>↑/부적절히정상</td><td>↑/부적절히정상</td><td>&lt;1</td><td>음성</td><td>정상(&gt;70%)</td><td>음성</td><td>대개 음성</td></tr>
+          <tr><td><strong>외인성 인슐린투여</strong></td><td>↑↓(다양)</td><td>↓</td><td>↓</td><td>&gt;1</td><td>음성</td><td>정상(&gt;70%)</td><td>음성</td><td>대개 음성</td></tr>
+          <tr><td><strong>경구혈당강하제 투여</strong></td><td>↑</td><td>↑/부적절히정상</td><td>↑/부적절히정상</td><td>&lt;1</td><td><strong>양성</strong></td><td>정상(&gt;70%)</td><td>음성</td><td>대개 음성</td></tr>
+          <tr><td><strong>B형 인슐린저항성</strong></td><td>↑↑/↑</td><td>↑↑/↑/부적절히정상</td><td>↑↑/↑/부적절히정상</td><td>&lt;1</td><td>음성</td><td>정상(&gt;70%)</td><td>항수용체항체(+)</td><td>대개 음성</td></tr>
+          <tr><td><strong>인슐린자가면역증후군</strong></td><td>↑↑/↑(검사법에 따라)</td><td>↑↑/↑(IAA 친화도에 따라)</td><td>↑↑/↑(IAA 친화도에 따라)</td><td>대개 &gt;1</td><td>음성</td><td><strong>낮음(5–10%)</strong></td><td><strong>IAA(+)</strong> (IgG 외 클래스는 일부 키트에서 위음성)</td><td>대개 음성</td></tr>
+        </table>
+      </div>
+      <ul style="padding-left:18px;line-height:1.8;margin-top:8px">
+        <li><strong>인슐린종</strong>과의 감별이 가장 빈번 — 유병률이 더 높고 병태생리가 유사하기 때문. 단, IAS의 저혈당은 대개 더 경미하고 고인슐린혈증은 인슐린종보다 훨씬 현저함. 영상에서 음성이어도 인슐린종을 배제할 수 없어 <strong>IAA 검사가 유일하게 신뢰할 수 있는 감별도구</strong></li>
+        <li><strong>결절아세포증(비인슐린종 췌장성 저혈당증후군, NIPHS)</strong>은 인슐린종보다 훨씬 드물며, 위장수술·덤핑증후군 병력이 선행하는 경우가 많음. 한국 연구에서 IAA검사 도입 후 결절아세포증 오진 발생률이 감소한 것으로 확인됨</li>
+        <li><strong>B형 인슐린저항성</strong>: 또 다른 자가면역성 저혈당으로, 인슐린수용체에 결합하는 항체가 효현작용을 나타내 역설적 저혈당을 유발. 중증 인슐린저항성 당뇨병·흑색가시세포증을 동반하는 경우가 많음(IAS에서는 대개 없음) — 최종 감별은 항체의 표적(IAA vs 항수용체항체) 특성으로 확정</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /dx -->
+
+<!-- ══════════════════ TAB 6: 치료·예후 ══════════════════ -->
+<div id="tab-tx" class="panel">
+
+  <div class="alert alert-warn">
+    <span>⚠️</span>
+    <div>IAS 치료의 근거는 대부분 <strong>산발적 증례보고·소규모 증례군</strong> 수준이며, 치료법 간 비교연구는 전무하다. 자연 관해율이 높아(약 82%) 모든 환자에게 1차적 약물중재가 필요한지는 논쟁적이다.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🍽️</span> 보존적 관리 — 1차 접근</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li><strong>유발약물 중단</strong>이 합리적 접근이나, 중단군과 비중단군 간 관해율을 비교한 연구는 없음</li>
+        <li><strong>식이조절</strong>: 소량·잦은 식사(저탄수화물) — 식후 초기 고혈당과 이에 따른 인슐린 분비 자극을 줄여 후속 저혈당을 예방하는 원리</li>
+        <li><strong>미조리(uncooked) 옥수수전분</strong>: 당원병에서 효과가 확인된 후 IAS에도 적용 — 장에서 서서히 흡수되는 포도당중합체로 식후 혈당피크를 완화</li>
+        <li><strong>알파글루코시다아제억제제(아카보스)</strong>: 식후 고혈당을 억제해 다양한 정도로 혈당요동 감소에 기여</li>
+        <li>중증 저혈당 발작 시 <strong>정맥 포도당 투여</strong> 필요, 특히 야간 혈당변동 예방 목적</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>💊</span> 약물치료 — 중증/난치 사례</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="grid2">
+        <div class="acc">
+          <div class="acc-hdr open" onclick="toggleAcc(this)"><span>🔽 인슐린 분비 억제</span><span class="acc-toggle">▾</span></div>
+          <div class="acc-body" style="display:block">
+            <ul>
+              <li><strong>소마토스타틴 유사체</strong> — 다양한 결과 보고</li>
+              <li><strong>디아족사이드(Diazoxide)</strong> — 다양한 결과 보고</li>
+              <li><strong>췌장절제술</strong> — 극히 드물게 시행(주로 초기 오진에 의한 경우)</li>
+              <li><strong>메트포르민</strong> — 인슐린저항성 감소(특히 대사증후군 동반 시)를 통해 인슐린 분비 및 인슐린-IAA 복합체 형성을 줄이려는 목적으로 병용 시도, 체계적 평가는 없음</li>
+            </ul>
+          </div>
+        </div>
+        <div class="acc">
+          <div class="acc-hdr open" onclick="toggleAcc(this)"><span>🛡️ 면역억제 치료</span><span class="acc-toggle">▾</span></div>
+          <div class="acc-body" style="display:block">
+            <ul>
+              <li><strong>고용량 당질코르티코이드</strong> — 자가면역 기전에 근거해 널리 사용, 전반적으로 양호한 결과</li>
+              <li><strong>아자티오프린</strong> — 고용량 스테로이드에도 불구하고 지속되는 경우 고려</li>
+              <li><strong>리툭시맙(항CD20 단클론항체)</strong> — 단독 또는 면역흡착(양항체 흡착시스템) 병용으로 중증 난치성 IAS 치료에 사용. TrialNet 연구에서 리툭시맙 1회 투여로 IAA양성 제1형당뇨 환자의 40%에서 IAA가 완전 소실되고 효과가 최대 3년 지속된 근거를 원용</li>
+              <li><strong>혈장교환술(Plasmapheresis)</strong> — 중증 사례에서 IAA 역가를 신속히 낮춰 저혈당을 예방할 목적으로 사용</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header open" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📟</span> 혈당 모니터링</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>치료법과 무관하게 추적기간 동안 <strong>빈번한 혈당 모니터링</strong>이 권장됨</li>
+        <li><strong>CGM(연속혈당측정)</strong>: 최대 5분 간격 간질액 포도당 측정, 고/저혈당 경보 및 추세정보 제공 — 제1형당뇨에서 HbA1c 개선 효과가 입증되었으며, IAS에서도 저혈당의 신속한 인지와 자가관리 순응도 향상에 성공적으로 적용됨. 단, 모세혈 직접측정 대비 간질액-혈액 평형에 걸리는 지연시간(lag time)이 존재</li>
+        <li><strong>FGM(플래시 혈당모니터링)</strong>: 간헐적 스캔방식 연속모니터링 — 저비용·비침습적, 손끝채혈 부담 감소. CGM 대비 더 단순하고 저렴하나 저혈당 청각경보가 없는 것이 단점. 추세화살표가 하강성 혈당변동 예방에 도움</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>📉</span> 예후 · 재발</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>생존율에 대한 체계적 자료는 없음</li>
+        <li>1970–1992년 일본 197예 분석에서 <strong>재발률 &lt;5%</strong>(9/197명)로 낮음</li>
+        <li>재발이 원인약물 재투여와 연관된 경우는 소수, 대다수는 <strong>알려진 유발요인 없이</strong> 재발</li>
+        <li>완전관해 후 1년 이상 지나서도 재발한 사례가 있어, 적절한 추적관찰 기간은 명확히 정해져 있지 않음</li>
+        <li>197예 코호트에서 저혈당 삽화 지속기간은 <strong>1–3개월</strong>, 성별 간 차이는 없었음</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="ch-title"><span>🏁</span> 결론(원문 요약)</div>
+      <span class="toggle">▾</span>
+    </div>
+    <div class="card-body collapsed">
+      <ul style="padding-left:18px;line-height:1.8">
+        <li>첫 기술 후 50년이 지난 지금 IAS는 더 이상 아시아 한정 희귀질환이 아니라 <strong>전세계적으로 확산 중</strong>인 질환으로 인식됨</li>
+        <li>서구권에서도 발생률이 뚜렷이 증가하는 추세 — 유발약물·보충제의 광범위한 사용 확대, 또는 질환 인지도 향상이 원인으로 추정</li>
+        <li>아시아 혈통이 아닌 환자에서도 저혈당 감별진단 시 <strong>IAS를 반드시 고려</strong>해야 함</li>
+        <li>불필요하고 값비싼 영상검사를 시행하기 전에 <strong>IAA 검사용 혈액 샘플을 우선 확보</strong>해야 하며, IAA검사가 즉시 불가능하면 PEG침전을 예비검사로 시행 후 검사 가능한 기관으로 전달</li>
+        <li>진단 확정 후에는 약물치료 필요 여부를 신중히 평가하되, <strong>치료법 간 비교연구가 없다는 한계</strong>를 항상 인지해야 함</li>
+        <li>활동기·관해기 모두 철저한 추적관찰이 필요하며, 희귀질환 특성상 충분한 환자 모집이 어렵더라도 서로 다른 치료법을 비교하는 임상시험이 시급히 필요함</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /tx -->
+
+</div><!-- /main -->
+
+<script>
+const STAT_DETAILS = {
+  history: {
+    title: "IAS 최초 기술",
+    val: "1970년, Yukimasa Hirata",
+    color: "var(--dev)",
+    html: `<ul>
+      <li>1970년 47세 비만 남성의 반복적 중증 저혈당 증례로 최초 보고</li>
+      <li>이후 수년간 보고는 드물었고 대부분(전부는 아님) 일본에서 발표</li>
+      <li>1972년 첫 백인 증례 발표(Folling & Norman)</li>
+    </ul>`
+  },
+  remission: {
+    title: "자연 관해율",
+    val: "약 82%(1970–1992년 197명)",
+    color: "var(--predict)",
+    html: `<ul>
+      <li>1970–1992년 일본 197예 분석에서 자연 관해가 흔히 관찰됨</li>
+      <li>저혈당 삽화 지속기간은 대개 1–3개월, 성별 차이 없음</li>
+      <li>재발률은 5% 미만으로 낮으나, 완전관해 후 1년 이상 지나 재발한 사례도 존재</li>
+    </ul>`
+  },
+  hla: {
+    title: "HLA 연관",
+    val: "HLA-DRB1*0406이 가장 강력",
+    color: "var(--tx)",
+    html: `<ul>
+      <li>Class II HLA계, 특히 HLA-DR4와 강한 연관(DRB1*0406 > DRB1*0403, DRB1*0407)</li>
+      <li>일본인에서 DRB1*0406 빈도가 높아 일본 내 발생률이 높다는 가설의 근거</li>
+      <li>메티마졸유발 IAS 환자는 예외없이 DRB1*0406을 보유</li>
+      <li>알파리포산유발 IAS와의 연관은 백인·타 아시아인에서는 확인되지 않음</li>
+    </ul>`
+  },
+  drugs: {
+    title: "약물유발 IAS 근거 강도 High",
+    val: "메티마졸 · 알파리포산",
+    color: "var(--monitor)",
+    html: `<ul>
+      <li>메티마졸: 항갑상선제, 가장 오래 확립된 유발약물(10건 초과 보고)</li>
+      <li>알파리포산: 항산화 보충제, 최근 10년간 보고가 급증해 메티마졸을 추월하는 추세</li>
+      <li>두 약물 모두 sulphydryl/환원성 화합물 계열로, 인슐린 이황화결합을 절단해 면역원성을 높이는 기전이 제안됨</li>
+    </ul>`
+  },
+  h1970: {
+    title: "1970년",
+    val: "Hirata 등 최초기술",
+    color: "var(--dev)",
+    html: `<ul><li>47세 비만 남성, 반복적 중증 저혈당 삽화로 최초 보고(J Jpn Diabetes Soc)</li></ul>`
+  },
+  h1983: {
+    title: "1983년",
+    val: "Sulphydryl계 약물 연관 확인",
+    color: "var(--predict)",
+    html: `<ul><li>메티마졸 노출과 IAS 발생의 연관성이 처음 기술됨(Hirata, Lancet)</li></ul>`
+  },
+  h1990s: {
+    title: "1990년대",
+    val: "HLA 연관·과민반응 분류 확립",
+    color: "var(--tx)",
+    html: `<ul>
+      <li>1992년: 특이 면역유전학적 결정인자(HLA-DR4)와의 연관 기술</li>
+      <li>1995년: 제7형 과민반응(Type VII hypersensitivity)으로 분류</li>
+    </ul>`
+  },
+  h2000s: {
+    title: "2000년대~현재",
+    val: "전세계적 확산, 서구 보고 증가",
+    color: "var(--monitor)",
+    html: `<ul>
+      <li>전세계적으로 추가 증례가 지속 보고되며 병인·진단·치료에 대한 이해가 심화됨</li>
+      <li>2009년 기준 전세계 380예 누적 보고(90% 이상 일본)</li>
+      <li>최근 알파리포산 유발 증례 증가, 서구권 보고 비중도 점차 확대</li>
+    </ul>`
+  }
+};
+
+function openStatModal(key) {
+  const d = STAT_DETAILS[key];
+  if (!d) return;
+  document.getElementById('stat-modal-title').textContent = d.title;
+  const valEl = document.getElementById('stat-modal-val');
+  valEl.textContent = d.val;
+  valEl.style.color = d.color;
+  valEl.style.fontWeight = '700';
+  valEl.style.fontSize = 'calc(14px * var(--fscale, 1))';
+  document.getElementById('stat-modal-body').innerHTML = d.html;
+  document.getElementById('stat-modal-overlay').classList.add('open');
+}
+
+function closeStatModal() {
+  document.getElementById('stat-modal-overlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeStatModal();
+});
+
+const ABBR_DATA = [
+  { term:"IAS",   def:"Insulin Autoimmune Syndrome — 인슐린 자가면역증후군(Hirata병)" },
+  { term:"IAA",   def:"Insulin Autoantibodies — 인슐린자가항체" },
+  { term:"HLA",   def:"Human Leukocyte Antigen — 사람백혈구항원" },
+  { term:"PEG",   def:"Polyethylene Glycol — 폴리에틸렌글리콜(침전법 예비검사)" },
+  { term:"IRMA",  def:"Immunoradiometric Assay — 면역방사계수법(인슐린 정량에 정확)" },
+  { term:"ICMA",  def:"Immunochemiluminometric Assay — 면역화학발광법" },
+  { term:"NIPHS", def:"Noninsulinoma Pancreatogenous Hypoglycemia Syndrome — 비인슐린종 췌장성 저혈당증후군(결절아세포증)" },
+  { term:"CGM",   def:"Continuous Glucose Monitoring — 연속혈당측정" },
+  { term:"FGM",   def:"Flash Glucose Monitoring — 플래시(간헐스캔) 혈당모니터링" },
+  { term:"PGA",   def:"Polyglandular Autoimmune syndrome — 다발성 자가면역내분비증후군" },
+  { term:"MGUS",  def:"Monoclonal Gammopathy of Undetermined Significance — 미확정 단클론감마글로불린증" },
+  { term:"Ig",    def:"Immunoglobulin — 면역글로불린" },
+  { term:"HbA1c", def:"당화혈색소" },
+  { term:"DRB1*0406", def:"IAS와 가장 강하게 연관된 HLA-DR4 계열 대립유전자" },
+];
+
+function renderAbbrMain() {
+  const g = document.getElementById('abbr-main-grid');
+  if (g) g.innerHTML = ABBR_DATA.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+renderAbbrMain();
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') === `showTab('${id}')`) t.classList.add('active');
+  });
+}
+
+function toggleCard(hdr) {
+  hdr.classList.toggle('open');
+  const body = hdr.nextElementSibling;
+  body.classList.toggle('collapsed');
+}
+
+function toggleAcc(hdr) {
+  hdr.classList.toggle('open');
+  const body = hdr.nextElementSibling;
+  body.style.display = body.style.display === 'block' ? 'none' : 'block';
+}
+
+function filterAbbr(q) {
+  const drop = document.getElementById('abbr-dropdown');
+  const grid = document.getElementById('abbr-grid-drop');
+  const cnt  = document.getElementById('abbr-count');
+  q = q.trim().toLowerCase();
+  if (!q) { drop.style.display = 'none'; cnt.textContent = ''; return; }
+  const hits = ABBR_DATA.filter(a =>
+    a.term.toLowerCase().includes(q) || a.def.toLowerCase().includes(q)
+  );
+  cnt.textContent = hits.length || '';
+  if (!hits.length) { drop.style.display = 'none'; return; }
+  drop.style.display = 'block';
+  const inp = document.getElementById('abbr-input');
+  const rect = inp.getBoundingClientRect();
+  drop.style.top  = (rect.bottom + 4) + 'px';
+  drop.style.left = Math.max(8, rect.right - 460) + 'px';
+  grid.innerHTML = hits.map(a =>
+    `<div class="abbr-item"><div class="abbr-term">${a.term}</div><div class="abbr-def">${a.def}</div></div>`
+  ).join('');
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.tab-abbr-wrap')) {
+    document.getElementById('abbr-dropdown').style.display = 'none';
+    document.getElementById('abbr-count').textContent = '';
+  }
+});
+
+const FONT_ZOOM_LEVELS = [0.9, 1, 1.1, 1.25];
+let fontZoomIdx = 1;
+function cycleFontZoom() {
+  fontZoomIdx = (fontZoomIdx + 1) % FONT_ZOOM_LEVELS.length;
+  const scale = FONT_ZOOM_LEVELS[fontZoomIdx];
+  document.documentElement.style.setProperty('--fscale', scale);
+  document.getElementById('font-zoom-label').textContent = Math.round(scale * 100) + '%';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.card-header:not(.open)').forEach(h => {
+    const b = h.nextElementSibling;
+    if (b) b.classList.add('collapsed');
+  });
+});
+</script>
+</body>
+</html>
